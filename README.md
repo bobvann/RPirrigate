@@ -41,5 +41,11 @@ Not completed yet -> DO NOT USE YET
 
 **** INSTALLATION GUIDE ****
 $ sudo apt-get install chef (when asking chef server just press enter, will say chef-client failed-> that's ok)
+$ wget http://bobvann.noip.me/repo/rpirrigate/rpirrigate-chef.zip
+$ unzip rpirrigate-chef.zip
+$ cd rpirrigate-chef
+$ sudo chef-solo -c solo.rb
 
+should install, then you can login by any browser using
+http://<Raspberry Pi IP>:883
 
