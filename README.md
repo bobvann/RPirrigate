@@ -1,4 +1,8 @@
 # RPirrigate
+
+RPirrigate is licensed under a Creative Commons Attribution-NoDerivatives 4.0 International License.
+
+
 Raspberry Pi irrigation system software
 
 RPirrigate provide to the users an easy-to-use, nice-to-see software for managing an irrigation system using a Raspberry Pi and few relayes and valves connected to the GPIO ports.
