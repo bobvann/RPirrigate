@@ -36,3 +36,11 @@ e.g. LANG_settings_NEW
 Not completed yet -> DO NOT USE YET
 
 
+
+
+
+**** INSTALLATION GUIDE ****
+$ sudo apt-get install chef
+
+
+
