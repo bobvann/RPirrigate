@@ -14,19 +14,25 @@ Currently supported languages are English and Italian.
 FILE STRUCTURE
 
 /web      -> web interface
+
 /daemon   -> daemon always running
+
 /chef     -> chef installer
 
 
 MISCELLANEOUS NOTES:
 
 *** WEB ***
+
 Languages constants:
+
 LANG_<page_name>_<element_name>
+
 e.g. LANG_settings_NEW
 
 
 *** CHEF ***
+
 Not completed yet -> DO NOT USE YET
 
 
