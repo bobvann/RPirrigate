@@ -1,6 +1,6 @@
 # RPirrigate
 
-RPirrigate is licensed under a Creative Commons Attribution-NoDerivatives 4.0 International License.
+RPirrigate is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License
 
 
 Raspberry Pi irrigation system software
