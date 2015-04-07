@@ -21,8 +21,6 @@ FILE STRUCTURE
 
 /daemon   -> daemon always running
 
-/chef     -> chef installer
-
 
 MISCELLANEOUS NOTES:
 
@@ -33,14 +31,6 @@ Languages constants:
 LANG_<page_name>_<element_name>
 
 e.g. LANG_settings_NEW
-
-
-*** CHEF ***
-
-Not completed yet -> DO NOT USE YET
-
-
-
 
 
 **** INSTALLATION GUIDE ****
