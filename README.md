@@ -40,7 +40,6 @@ Not completed yet -> DO NOT USE YET
 
 
 **** INSTALLATION GUIDE ****
-$ sudo apt-get install chef
-
+$ sudo apt-get install chef (when asking chef server just press enter, will say chef-client failed-> that's ok)
 
 
