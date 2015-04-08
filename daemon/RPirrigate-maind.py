@@ -24,6 +24,16 @@ def handUSR2(signum, frame):
 def handHUP(signum, frame):
 	Settings.reloadWeatherLogsOnNext = True
 
+
+#LOG ON LOGFILE
+def logStatus(text):
+	with open("/var/log/rpirrigate/status.log","a") as f: 
+		f.write(str(datetime.now())+" "+text+"\n")
+
+def logError(text):
+	with open("/var/log/rpirrigate/error.log","a") as f: 
+		f.write(str(datetime.now())+" "+text+"\n")
+
 signal.signal(signal.SIGUSR1, handUSR1)
 signal.signal(signal.SIGUSR2, handUSR2)
 signal.signal(signal.SIGHUP, handHUP)
@@ -82,18 +92,18 @@ while(True):
 		wd = ""
 		#ATTEMPTS UNTIL GETS OK RESPONSE FROM WEATHERD (should always go fine btw)
 		while wd!="OK\n":
-			print "trying weather"
+			logStatus("TRYING WEATHER")
 			wd = subprocess.check_output(["python", "/srv/rpirrigate/daemon/RPirrigate-weatherd.py"])
 			print wd
 			if wd!="OK\n":
-					sleep(now.second % 15) #waits pseudo-random seconds 0-15 before attempting again
+				sleep(datetime.now().second % 15) #waits pseudo-random seconds 0-15 before attempting again
 
 		weatherdExecutedToday = True
 		Settings.ReloadWeatherLogsOnNext = True
 
 	#CHECK IF NEED TO RELOAD SETTINGS (SIGUSR1, sent by web)
 	if Settings.reloadSettingsOnNext:
-		print "RELOAD SETTINGS NOW"
+		logStatus("RELOAD SETTINGS")
 		Settings.reload(DataBase)
 
 		#1) check if need to add modules
@@ -111,6 +121,7 @@ while(True):
 
 	#CHECK IF NEED TO RELOAD MANUALS (SIGUSR2, sent by web)
 	if Settings.reloadManualsOnNext:
+		logStatus("RELOAD MANUALS")
 		for mod in Modules:
 			mod.reloadManuals(DataBase)
 
@@ -118,6 +129,7 @@ while(True):
 
 	##CHECK IF NEED TO RELOAD WEATHER & LOGS (SIGHUP, sent by weatherd)
 	if Settings.reloadWeatherLogsOnNext:
+		logStatus("RELOAD WEATHER")
 		Logs.reload(DataBase)
 		Weather.reload(DataBase)
 
@@ -136,6 +148,7 @@ while(True):
 			M.close(GPIO)
 	
 	#DEBUG
+	logStatus("WHILE ENDED")
 	print "WHILE ENDED " + str(datetime.now())
 	for mod in Modules:
 		print "MODULO " + str(mod.id)

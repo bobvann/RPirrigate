@@ -99,12 +99,15 @@ class ModuleClass:
 		if self.openEventID==-1 and (not self.manualACT or (self.manualACT and not self.manualVAL)):
 			return True
 		else:
-			try:
-				for ev in self.Events:
-					if ev.id == self.openEventID:
-						if (self.openTime + timedelta(minutes=ev.duration)) < now:
-							return True
-						else:
-							return False
-			except AttributeError:
-				return False
+			if self.manualACT:
+				return not self.manualVAL
+			else:
+				try:
+					for ev in self.Events:
+						if ev.id == self.openEventID:
+							if (self.openTime + timedelta(minutes=ev.duration)) < now:
+								return True
+							else:
+								return False
+				except AttributeError:
+					return False
