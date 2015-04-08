@@ -92,11 +92,12 @@ while(True):
 		wd = ""
 		#ATTEMPTS UNTIL GETS OK RESPONSE FROM WEATHERD (should always go fine btw)
 		while wd!="OK\n":
-			logStatus("TRYING WEATHER")
+			logStatus("FETCH WEATHER")
 			wd = subprocess.check_output(["python", "/srv/rpirrigate/daemon/RPirrigate-weatherd.py"])
 			print wd
 			if wd!="OK\n":
-				sleep(datetime.now().second % 15) #waits pseudo-random seconds 0-15 before attempting again
+				sleep((datetime.now().second % 12)+3) #waits pseudo-random seconds 3-15 before attempting again
+				logStatus("FETCH WEATHER FAILED")
 
 		weatherdExecutedToday = True
 		Settings.ReloadWeatherLogsOnNext = True
@@ -142,38 +143,40 @@ while(True):
 			M.open(GPIO, evID)
 			DataBase.query_log_open(M, evID)
 			Logs.logOpen(M, evID)
+			logStatus("MODULE OPEN " + str(M.id))
 		if M.isOpen  and M.shouldCloseNow():
 			DataBase.query_log_close(M)
 			Logs.logClose(M)
 			M.close(GPIO)
+			logStatus("MODULE CLOSE " + str(M.id))
 	
 	#DEBUG
-	logStatus("WHILE ENDED")
-	print "WHILE ENDED " + str(datetime.now())
-	for mod in Modules:
-		print "MODULO " + str(mod.id)
-		print "   isOpen: " + str(mod.isOpen)
-		print "   shouldOpenNow: " + str(mod.shouldOpenNow(Logs, Weather))
-		print "   ManualACT: " + str(mod.manualACT)
-		print "   ManualVAL: " + str(mod.manualVAL)
-		print "   GPIO: " + str(mod.gpio)
-		print "   Throughtput: " + str(mod.throughtput)
-		if mod.isOpen:
-			print "   shouldCloseNow: " + str(mod.shouldCloseNow())
-			print "   openEventID: " + str(mod.openEventID)
-			print "   openDbRowID: " + str(mod.openDbRowID)
-			print "   openTime: " + str(mod.openTime)
-			print "   openDbRowID: " + str(mod.openDbRowID)
-			if mod.openEventID != -1:
-				print "   openLiters: " + str(mod.openLiters)
-		for ev in mod.Events:
-			print "   EVENTO: " + str(ev.id)
-			print "      Intervallo: " + str(ev.timeInterval)
-			print "      Ora: " + str(ev.hour)
-			print "      Litri: " + str(ev.liters)
-			print "      Durata: " + str(ev.duration)
-			print "      Prima Esecuzione: " + str(ev.firstExecution)
-	print ""
+	#logStatus("WHILE ENDED")
+	#print "WHILE ENDED " + str(datetime.now())
+	#for mod in Modules:
+		#print "MODULO " + str(mod.id)
+		#print "   isOpen: " + str(mod.isOpen)
+		#print "   shouldOpenNow: " + str(mod.shouldOpenNow(Logs, Weather))
+		#print "   ManualACT: " + str(mod.manualACT)
+		#print "   ManualVAL: " + str(mod.manualVAL)
+		#print "   GPIO: " + str(mod.gpio)
+		#print "   Throughtput: " + str(mod.throughtput)
+		#if mod.isOpen:
+			#print "   shouldCloseNow: " + str(mod.shouldCloseNow())
+			#print "   openEventID: " + str(mod.openEventID)
+			#print "   openDbRowID: " + str(mod.openDbRowID)
+			#print "   openTime: " + str(mod.openTime)
+			#print "   openDbRowID: " + str(mod.openDbRowID)
+			#if mod.openEventID != -1:
+				#print "   openLiters: " + str(mod.openLiters)
+		#for ev in mod.Events:
+			#print "   EVENTO: " + str(ev.id)
+			#print "      Intervallo: " + str(ev.timeInterval)
+			#print "      Ora: " + str(ev.hour)
+			#print "      Litri: " + str(ev.liters)
+			#print "      Durata: " + str(ev.duration)
+			#print "      Prima Esecuzione: " + str(ev.firstExecution)
+	#print ""
 
 	sleep(60)
 
