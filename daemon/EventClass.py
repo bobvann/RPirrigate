@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date, time
 ### CLASS Event (Module.Events are all Events)
 ##
 ## this file needs to be included only in the ModuleClass.py file
@@ -27,9 +27,9 @@ class EventClass:
 		data = DataBase.select_event_data(self.id)
 
 		self.timeInterval = data[0]
-		self.hour =  data[1]
-		self.liters = data[2]
-		self.firstExecution = data[3]
+		self.hour =  time( int( data[1] ), int( data[2] ) )
+		self.liters = data[3]
+		self.firstExecution = data[4]
 
 	def nextExec(self, Logs):
 		for log in Logs.elements:
@@ -37,7 +37,9 @@ class EventClass:
 				last = log.time
 				if type(last) is str:
 					last = datetime.strptime(log.time, '%Y-%m-%d %H:%M:%S')
-				return last + timedelta(minutes=self.timeInterval)
+				next= last + timedelta(minutes=self.timeInterval)
+
+				return datetime(next.year, next.month, next.day, self.hour.hour, self.hour.minute)
 
 		#here if not found yet
 		return datetime.strptime(str( str(self.firstExecution) + " " + str(self.hour)), '%Y-%m-%d %H:%M:%S')

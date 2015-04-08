@@ -82,10 +82,10 @@ class DBClass:
 	#returns array [TimeInterval, Hour, Liters, FirstExecution]
 	def select_event_data(self, EventID):
 		cursor = self.db.cursor()
-		cursor.execute("SELECT TimeInterval, Hour, Liters, FirstExecution FROM tbEvents WHERE EventID = " + str(EventID))
+		cursor.execute("SELECT TimeInterval, HOUR(Hour), MINUTE(Hour), Liters, FirstExecution FROM tbEvents WHERE EventID = " + str(EventID))
 		results = cursor.fetchall()
 		self.db.commit()
-		return [results[0][0], results[0][1], results[0][2], results[0][3] ]
+		return [results[0][0], results[0][1], results[0][2], results[0][3], results[0][4] ]
 
 	def query_pid_save(self, pid):
 		cursor = self.db.cursor()

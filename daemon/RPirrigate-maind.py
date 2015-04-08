@@ -176,6 +176,7 @@ while(True):
 			#print "      Litri: " + str(ev.liters)
 			#print "      Durata: " + str(ev.duration)
 			#print "      Prima Esecuzione: " + str(ev.firstExecution)
+			#print "      Next Esecuzione: " + str(ev.nextExec(Logs))
 	#print ""
 
 	sleep(60)

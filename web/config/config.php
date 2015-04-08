@@ -236,13 +236,14 @@ class DB_CONN {
 	}
 
 	public function select1_event_nexttime($eventID, $interval){
-		$sql = "SELECT Time + INTERVAL :min MINUTE FROM tbLogs WHERE EventID = :event ORDER BY Time DESC LIMIT 1";
+		$sql = "SELECT DATE(Time + INTERVAL :min MINUTE) FROM tbLogs WHERE EventID = :event ORDER BY Time DESC LIMIT 1";
 		
 		$executed = $this->ex_select_getFirst($sql, array(':event'=>$eventID, ':min'=>$interval));
 
-		if($executed)
-			return $executed;
-		else{
+		if($executed){
+			$hour = $this->ex_select_getFirst("SELECT Hour FROM tbEvents WHERE EventID = :event",array(':event'=>$eventID));
+			return $executed . " " . $hour;
+		} else{
 			$sql = "SELECT CONCAT(FirstExecution, ' ', Hour) FROM tbEvents WHERE EventID = :event";
 			return $this->ex_select_getFirst($sql, array(':event'=>$eventID));
 		}
