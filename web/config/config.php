@@ -40,26 +40,13 @@ function minutesToString($minutes){
 
 class DB_CONN {
 	private $db_conn;
-	private $INIsettings = false;
-
-    // this function will return a setting's value if setting exists, otherwise default value
-    // also this function will load your config file only once, when you try to get first value
-    private function getINI( $section, $key, $default = null ) {
-        if ( $this->INIsettings === false ) {
-            $this->INIsettings = parse_ini_file( 'database.ini', true );
-        }
-        foreach ( $this->INIsettings[$section] as $_key => $_value ) {
-            if ( $_key == $key ) return $_value;
-        }
-        return $default;
-    }
 
 	public function __construct(){
-		$type = $this->getINI('DB','type');
-		$host = $this->getINI('DB','host');
-		$name = $this->getINI('DB','name');
-		$user = $this->getINI('DB','user');
-		$pass = $this->getINI('DB','pass');
+		$type='mysql';
+		$host='localhost';
+		$name='dbRpirrigate';
+		$user='rpirrigate';
+		$pass='rpirrigate';
 
 		$conn_string = $type . ":host=" . $host . ";dbname=" . $name;
 		$this->db_conn = new PDO($conn_string, $user, $pass);
