@@ -32,14 +32,18 @@ class EventClass:
 		self.firstExecution = data[4]
 
 	def nextExec(self, Logs):
+		thisLogTimes = []
 		for log in Logs.elements:
 			if log.eventID == self.id:
-				last = log.time
-				if type(last) is str:
-					last = datetime.strptime(log.time, '%Y-%m-%d %H:%M:%S')
-				next= last + timedelta(minutes=self.timeInterval)
+				thisLogTimes.append(log.time)
 
-				return datetime(next.year, next.month, next.day, self.hour.hour, self.hour.minute)
+		if len(thisLogTimes)>0:
+			last = thisLogTimes[-1]
+			if type(last) is str:
+				last = datetime.strptime(log.time, '%Y-%m-%d %H:%M:%S')
+			next= last + timedelta(minutes=self.timeInterval)
 
-		#here if not found yet
-		return datetime.strptime(str( str(self.firstExecution) + " " + str(self.hour)), '%Y-%m-%d %H:%M:%S')
+			return datetime(next.year, next.month, next.day, self.hour.hour, self.hour.minute)
+		else:
+			#here if not found yet
+			return datetime.strptime(str( str(self.firstExecution) + " " + str(self.hour)), '%Y-%m-%d %H:%M:%S')

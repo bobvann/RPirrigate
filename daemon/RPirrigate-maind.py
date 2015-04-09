@@ -1,5 +1,5 @@
 #DEFAULT LIBRARIES
-import os, signal, subprocess
+import os, signal, subprocess, sys
 from time import sleep
 from datetime import datetime
 
@@ -85,7 +85,7 @@ try:
 
 	weatherdExecutedToday = False
 
-	while(True):
+	while(False):
 		#EXECUTE WEATHERD AT 3 AM
 		now = datetime.now()
 		if now.hour==2:
