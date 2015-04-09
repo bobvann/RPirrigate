@@ -85,7 +85,7 @@ try:
 
 	weatherdExecutedToday = False
 
-	while(False):
+	while(True):
 		#EXECUTE WEATHERD AT 3 AM
 		now = datetime.now()
 		if now.hour==2:
