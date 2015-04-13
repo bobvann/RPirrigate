@@ -182,6 +182,9 @@ try:
 		#print ""
 
 		sleep(60)
+except MySQLdb.OperationalError, message:	# handle trouble
+	errorcode = message[0]	# get MySQL error code
+	logError(str(errorcode))
 except:
 	logError(str(sys.exc_info()[0]))
 	
