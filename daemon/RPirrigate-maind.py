@@ -13,47 +13,51 @@ from GPIOClass import GPIOClass
 
 
 #ON SIGUSR1 UPDATES SETTINGS + MODULE INFOS,
-#ON SIGUSR2 UPDATES MANUAL VALS
-#ON SIGHUP RELOADS LOGS AND WEATHER (gets this signal from weather daemon)
 def handUSR1(signum, frame):
 	Settings.reloadSettingsOnNext = True
 
+#ON SIGUSR2 UPDATES MANUAL VALS
 def handUSR2(signum, frame):
 	Settings.reloadManualsOnNext = True
 
+#ON SIGHUP RELOADS LOGS AND WEATHER (gets this signal from weather daemon)
+#REALLY DON'T NEED THIS, AS WEATHER IS A SUBPROCESS
+#GONNA KEEP IT HERE FOR NOW, maybe will change weather logic later
 def handHUP(signum, frame):
 	Settings.reloadWeatherLogsOnNext = True
 
 
-#LOG ON LOGFILE
+#LOG ON LOGFILE status
 def logStatus(text):
 	with open("/var/log/rpirrigate/status.log","a") as f: 
 		f.write(str(datetime.now())+" "+text+"\n")
 
+#LOG ON LOGFILE error
 def logError(text):
 	with open("/var/log/rpirrigate/error.log","a") as f: 
 		f.write(str(datetime.now())+" "+text+"\n")
 
+#SIGNAL HANDLING DEFINITON
 signal.signal(signal.SIGUSR1, handUSR1)
 signal.signal(signal.SIGUSR2, handUSR2)
 signal.signal(signal.SIGHUP, handHUP)
 
+#CATCH **ANY** ERROR AND WRITE ERROR FILE 
 try:
 	#DATABASE CLASS
 	DataBase = DBClass()
 
-	# Settings get Setting object
-	# Only One! This would be a static class in Java
+	# Settings obj 
 	Settings = SettingClass(DataBase)
 
-	#Weather (pseudo-static) class
+	#Weather obj 
 	Weather = WeatherClass(DataBase)
 
-	#GPIO (pseudo-static) class
+	#GPIO obj 
 	GPIO = GPIOClass()
 
-	#Create Modules[] array of Modules
-	#Every Module create its Events as its .Events
+	#Create Modules[] array of Modules  objs
+	#Every Module create its Events as its M.Events[] in its constructor
 	Modules = []
 	mods = DataBase.select_module_ids()
 	for mod in mods:
@@ -69,9 +73,7 @@ try:
 	##  ONE DATABASE CLASS ((i.e. DataBase  ))
 	##  AN ARRAY OF MODULE CLASSES ((i.e. Modules[]  ))
 
-	#NOW WE HAVE TO SAVE THE PID OF THIS PROCESS IN THE DATABASE 
-	#SO THE PHP CAN SEND SIGUSR1 /SIGUSR2
-	#AND THE WEATHER DAEMON/CRONJOB CAN SEND SIGHUP
+	#SAVE THE PID ON THE DB SO PHP CAN SEND SIGNALS
 	pid = os.getpid()
 	DataBase.query_pid_save(pid)
 
@@ -83,8 +85,8 @@ try:
 	#print "WillRainToday: " + str(DataBase.select1_willRainToday())
 	#print ""
 
+	#WEATHER LOGIC...if weatherd has been executed today
 	weatherdExecutedToday = False
-
 	while(True):
 		#EXECUTE WEATHERD AT 3 AM
 		now = datetime.now()
@@ -182,9 +184,9 @@ try:
 		#print ""
 
 		sleep(60)
-except MySQLdb.OperationalError, message:	# handle trouble
-	errorcode = message[0]	# get MySQL error code
-	logError(str(errorcode))
 except:
-	logError(str(sys.exc_info()[0]))
+	s = ""
+	for x in sys.exc_info():
+		s = s + str(x)
+	logError(s)
 	
