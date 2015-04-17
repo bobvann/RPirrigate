@@ -60,6 +60,8 @@ define('LANG_module_IRRIG_LAST', 'Ultima irrigazione');
 define('LANG_module_IRRIG_NEXT', 'Prossima irrigazione');
 define('LANG_module_IRRIG_PLAN', 'Piano di irrigazione');
 define('LANG_module_IRRIGS_LAST', 'Ultime irrigazioni');
+define('LANG_module_IRRIGS', 'Irrigazioni');
+define('LANG_module_VIEWALL', 'Vedi Tutte');
 define('LANG_module_SETTINGS', 'Impostazioni modulo');
 define('LANG_module_NAME', 'Nome');
 define('LANG_module_EDIT', 'Modifica');
@@ -80,6 +82,7 @@ define('LANG_module_BANNER_NEWEVENT', 'Nuova irrigazione aggiunta al piano con s
 define('LANG_module_BANNER_DELETEEVENT', 'Irrigazione eliminata con successo');
 define('LANG_module_THROUGHTPUT', 'Portata (l/h)');
 define('LANG_module_LITERS','Litri');
+define('LANG_module_LITERS_SHORT','Lt.');
 define('LANG_module_INTERVAL','Intervallo');
 define('LANG_module_ADDEVENT','Nuova Irrigazione');
 define('LANG_module_QUANTITYTOGIVE',"Litri d'acqua ad ogni irrigazione");

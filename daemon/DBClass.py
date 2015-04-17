@@ -27,6 +27,7 @@ class DBClass:
 
 	def __init__(self):
 		self.db = MySQLdb.connect(self.host, self.username, self.password, self.name)
+		self.db.ping(True)
 
 	def select1_setting(self, name):
 		

@@ -136,6 +136,19 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
         }  
         return confirm('<?php echo LANG_settings_RUSURE?>');
       }
+
+      function Logs_ShowHide(){
+        if($('#divRowLogs').css('display')!= "block" ){
+          $('#divRow1').css('display','none');
+          $('#divRow2').css('display','none');
+          $('#divRowLogs').css('display','block');
+        } else {
+          $('#divRow1').css('display','block');
+          $('#divRow2').css('display','block');
+          $('#divRowLogs').css('display','none');
+
+        }
+      }
     </script>
     <style type="text/css">
       input[type="checkbox"] { 
@@ -241,7 +254,7 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
           </div>
         </div>
 
-        <div class="row">
+        <div class="row" id="divRow1">
           <div class="col-lg-4">
             <div class="bs-component">
               
@@ -249,7 +262,7 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
                 <div class="panel-heading">
                   <h3 class="panel-title"><?php echo LANG_module_STATUS; ?></h3>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body" style="font-size:90%">
                   <table><tr>
                   <form method="post" action="" name="frmManual">
                     <input type="hidden" name="ManualSave" value="true" />
@@ -368,7 +381,7 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
             </div>
           </div>
         </div>
-        <div class="row">
+        <div class="row" id="divRow2">
           <div class="col-lg-4">
             <div class="bs-component">
               <div class="panel panel-info">
@@ -463,7 +476,14 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
             <div class="bs-component">
               <div class="panel panel-info">
                 <div class="panel-heading">
-                  <h3 class="panel-title"><?php echo LANG_module_IRRIGS_LAST;?></h3>
+                  <h3 class="panel-title">
+                    <?php echo LANG_module_IRRIGS_LAST;?>
+                    <?php if (!$NoLogsYet): ?>
+                      <span style="position:absolute;right:0;width:100px">
+                        <a href="javascript:Logs_ShowHide();">
+                          <?php echo LANG_module_VIEWALL;?></a></span>
+                    <?php endif ?>
+                  </h3>
                 </div>
                 <div class="panel-body">
                   <?php
@@ -472,14 +492,14 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
                       <tr>
                         <td><b><?php echo LANG_module_DATE;?></b></td>
                         <td><b><?php echo LANG_module_TYPE;?></b></td>
-                        <td><b><?php echo LANG_module_LITERS;?>/mm</b></td>
+                        <td></td>
                       </tr>
                       <?php
                       $lasts = $db->select_module_lastLogs($currModuleID);
                       while($row = $lasts->fetch(PDO::FETCH_ASSOC)){
-                        echo("<tr><td>".$row['Time']."</td>");
+                        echo("<tr><td>".substr($row['Time'],0, 16)."</td>");
                         echo("<td>".($row['isRain']? LANG_module_RAIN : (($row['EventID']=='-1')?LANG_module_MANUALIRRIGATION : LANG_module_PLANNEDIRRIGATION)) ."</td>");
-                        echo("<td>".$row['Liters']."</td></tr>");
+                        echo("<td>".$row['Liters']." " . ($row['isRain']? "mm" : LANG_module_LITERS_SHORT) ."</td></tr>");
                       }
                       ?>
                     </table>
@@ -567,6 +587,43 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
         </div>
 
       </div>
+
+      <div class="row" id="divRowLogs" style="display:none">
+          <div class="col-lg-3"></div>
+          <div class="col-lg-6">
+            <div class="bs-component">
+              
+              <div class="panel-info" style="border: 1px solid #dddddd;border-radius: 4px;-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);">
+                <div class="panel-heading">
+                  <h3 class="panel-title">
+                    <?php echo LANG_module_IRRIGS;?>
+                    <span style="position:absolute;right:0;width:100px">
+                        <a href="javascript:Logs_ShowHide();">
+                          <?php echo LANG_module_BACK;?></a></span>
+                  </h3>
+                </div>
+                <div class="panel-body">
+                  <table style="width:100%;">
+                      <tr>
+                        <td><b><?php echo LANG_module_DATE;?></b></td>
+                        <td><b><?php echo LANG_module_TYPE;?></b></td>
+                        <td></td>
+                      </tr>
+                      <?php
+                      $lasts = $db->select_module_logs($currModuleID);
+                      while($row = $lasts->fetch(PDO::FETCH_ASSOC)){
+                        echo("<tr><td>".substr($row['Time'],0, 16)."</td>");
+                        echo("<td>".($row['isRain']? LANG_module_RAIN : (($row['EventID']=='-1')?LANG_module_MANUALIRRIGATION : LANG_module_PLANNEDIRRIGATION)) ."</td>");
+                        echo("<td>".$row['Liters']." " . ($row['isRain']? "mm" : LANG_module_LITERS_SHORT) ."</td></tr>");
+                      }
+                      ?>
+                    </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       <footer><?php include 'misc/footer.php';?></footer>
     </div>
 

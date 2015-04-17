@@ -197,6 +197,16 @@ class DB_CONN {
 		return $this->ex_select($sql,array(':module'=>$module));
 	}
 
+	public function select_module_logs($module){
+		$sql = "(SELECT * ";
+		$sql.= "FROM tbLogs ";
+		$sql.= "WHERE Liters > -1 AND ModuleID = :module )";
+		$sql.= "UNION (SELECT * FROM tbLogs WHERE isRain = 1)";
+		$sql.= "ORDER BY Time DESC";
+
+		return $this->ex_select($sql,array(':module'=>$module));
+	}
+
 	public function query_module_manual_update($id, $act, $val){
 		$sql = "UPDATE tbModules ";
 		$sql.= "SET ManualACT = :act, ManualVAL = :val ";
