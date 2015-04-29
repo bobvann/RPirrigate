@@ -78,6 +78,7 @@ try:
 	DataBase.query_pid_save(pid)
 
 
+	logStatus("RPirrigate STARTED")
 	#DEBUG
 	#print "PID:" + str(pid)
 	#print ""
@@ -86,13 +87,11 @@ try:
 	#print ""
 
 	#WEATHER LOGIC...if weatherd has been executed today
-	weatherdExecutedToday = False
+	weatherdExec = False
 	while(True):
 		#EXECUTE WEATHERD AT 3 AM
 		now = datetime.now()
-		if now.hour==2:
-			weatherdExecutedToday = False
-		if now.hour==3 and not weatherdExecutedToday:
+		if now.hour==0 and not weatherdExec:
 			wd = ""
 			#ATTEMPTS UNTIL GETS OK RESPONSE FROM WEATHERD (should always go fine btw)
 			while wd!="OK\n":
@@ -103,8 +102,11 @@ try:
 					sleep((datetime.now().second % 12)+3) #waits pseudo-random seconds 3-15 before attempting again
 					logStatus("FETCH WEATHER FAILED")
 
-			weatherdExecutedToday = True
+			weatherdExec = True
 			Settings.ReloadWeatherLogsOnNext = True
+
+		if now.hour==1:
+			weatherdExec = False
 
 		#CHECK IF NEED TO RELOAD SETTINGS (SIGUSR1, sent by web)
 		if Settings.reloadSettingsOnNext:

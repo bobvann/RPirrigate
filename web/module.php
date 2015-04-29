@@ -31,7 +31,11 @@ if(isset($_POST['ManualSave']) && $_POST['ManualSave']=='true'){
   $bannerMessage = LANG_module_BANNER_MANUAL;
   //*** ALSO SEND SIGUSR2 TO THE DAEMON TO MAKE IT RELOAD MANUALS
   $pid = $db->select1_daemon_pid();
-  posix_kill($pid , SIGUSR2);
+  //Newer php version use SIG_NAME, newer SIGNAME
+  if(defined('SIG_USR2'))
+    posix_kill($pid , SIG_USR2);
+  else
+    posix_kill($pid , SIGUSR2);
   sleep(1); //let daemon reload and log
 }
 
@@ -40,7 +44,11 @@ if (isset($_POST['Settings_Throughtput']) && isset($_POST['Settings_Name']) && i
   $bannerMessage = LANG_module_BANNER_SETTINGS;
   //*** ALSO SEND SIGUSR1 TO THE DAEMON TO MAKE IT RELOAD SETTINGS!!
   $pid = $db->select1_daemon_pid();
-  posix_kill($pid , SIGUSR1);
+  //Newer php version use SIG_NAME, newer SIGNAME
+  if(defined('SIG_USR1'))
+    posix_kill($pid , SIG_USR1);
+  else
+    posix_kill($pid , SIGUSR1);
   sleep(1); //let daemon reload and log
 }
 
@@ -54,7 +62,11 @@ if(isset($_POST['NewEvent_startdate']) && isset($_POST['NewEvent_starttime']) &&
   $bannerMessage = LANG_module_BANNER_NEWEVENT;
   //ALSO SEND SIGUSR1 TO THE DAEMON TO MAKE IT RELOAD SETTINGS
   $pid = $db->select1_daemon_pid();
-  posix_kill($pid , SIGUSR1);
+  //Newer php version use SIG_NAME, newer SIGNAME
+  if(defined('SIG_USR1'))
+    posix_kill($pid , SIG_USR1);
+  else
+    posix_kill($pid , SIGUSR1);
   sleep(1); //let daemon reload and log
 }
 
@@ -63,7 +75,11 @@ if(isset($_POST['DeleteEvent'])){
   $bannerMessage = LANG_module_BANNER_DELETEEVENT;
   //ALSO SEND SIGUSR1 TO THE DAEMON
   $pid = $db->select1_daemon_pid();
-  posix_kill($pid , SIGUSR1);
+  //Newer php version use SIG_NAME, newer SIGNAME
+  if(defined('SIG_USR1'))
+    posix_kill($pid , SIG_USR1);
+  else
+    posix_kill($pid , SIGUSR1);
   sleep(1); //let daemon reload and log
 }
 

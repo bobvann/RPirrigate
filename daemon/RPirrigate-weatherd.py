@@ -46,9 +46,9 @@ j = json.loads(response.read())
 forecastsDo = False
 forecasts = []
 for hourly in j['data']['weather'][0]['hourly']:
-	timeS = "000" + hourly['time']
-	timeS = now_date + " " + timeS[-4:-2] + ":" + timeS[-2:]
 	if float(hourly['precipMM']) >= MIN_MM:
+		timeS = "000" + hourly['time']
+		timeS = now_date + " " + timeS[-4:-2] + ":" + timeS[-2:]
 		forecastsDo = True
 		forecasts.append(Rain(timeS, float(hourly['precipMM']) ))
 
@@ -66,10 +66,9 @@ j = json.loads(response.read())
 logsDo = False
 rains = []
 for hourly in j['data']['weather'][0]['hourly']:
-	timeS = "000" + hourly['time']
-	timeS = yesterday_date + " " + timeS[-4:-2] + ":" + timeS[-2:]
-
 	if float(hourly['precipMM']) >= MIN_MM:
+		timeS = "000" + hourly['time']
+		timeS = yesterday_date + " " + timeS[-4:-2] + ":" + timeS[-2:]
 		logsDo = True
 		rains.append(Rain(timeS, float(hourly['precipMM']) ))
 

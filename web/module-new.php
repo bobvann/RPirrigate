@@ -15,7 +15,11 @@ if(isset($_POST['name'])&&isset($_POST['description'])&&isset($_POST['gpio'])&&i
   $bannerMessage = LANG_modulenew_BANNER;
   //*** ALSO SEND SIGUSR1 TO THE DAEMON TO MAKE IT RELOAD SETTINGS!!
   $pid = $db->select1_daemon_pid();
-  posix_kill($pid , SIGUSR1);
+  //Newer php version use SIG_NAME, newer SIGNAME
+  if(defined('SIG_USR1'))
+    posix_kill($pid , SIG_USR1);
+  else
+    posix_kill($pid , SIGUSR1);
   sleep(1); //let daemon reload and log
 }
 ?>
