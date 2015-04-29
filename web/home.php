@@ -19,15 +19,16 @@ include 'languages/'.$lang.'/'.$lang.'.php';
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="stylesheet" href="misc/bootstrap.css" media="screen">
     <link rel="stylesheet" href="misc/bootswatch.min.css">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <script src="//code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <?php if($location!=""): ?>
       <script type="text/javascript">
         var loc = "<?php echo $location;?>";
-        var lang = '<?php echo $lang;?>';
-        $.getJSON("http://api.openweathermap.org/data/2.5/weather?q="+loc+"&units=metric&cnt=7&lang="+lang, function( data ) {
-          $('#imgWeather').attr("src","http://openweathermap.org/img/w/"+data.weather[0].icon+".png");
-          $('#spanWeather').html("<br/><b>"+loc+"</b><br/>"+data.weather[0].description+"<br/>"+Math.round(data.main.temp)+" C");
+        var lang = '<?php echo strtolower($lang);?>';
+
+        $.getJSON("//api.worldweatheronline.com/free/v2/weather.ashx?q="+loc+"&key=dadb7eba889f53e8a61dd447cac39&format=json&fx=no&lang="+lang, function( x ) {
+          $('#imgWeather').attr("src",x.data.current_condition[0].weatherIconUrl[0].value.substr(5));
+          $('#spanWeather').html("<br/><b>"+loc+"</b><br/>"+x.data.current_condition[0]['lang_'+lang][0].value+"<br/>"+Math.round(x.data.current_condition[0].temp_C)+" C");
           $('#pWeather').remove();
         });
       </script>
@@ -187,7 +188,7 @@ include 'languages/'.$lang.'/'.$lang.'.php';
     </div>
 
 
-<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="misc/bootstrap.min.js"></script>
 </body>
 </html>

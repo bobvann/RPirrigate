@@ -32,9 +32,9 @@ if(isset($_POST['name'])&&isset($_POST['description'])&&isset($_POST['gpio'])&&i
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="stylesheet" href="misc/bootstrap.css" media="screen">
     <link rel="stylesheet" href="misc/bootswatch.min.css">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
-    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha1.js"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <script src="//crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
+    <script src="//crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha1.js"></script>
     <script type="text/javascript">
     function Step1_2(){
       if($('#txtName').val().length==0 ){
@@ -210,7 +210,7 @@ if(isset($_POST['name'])&&isset($_POST['description'])&&isset($_POST['gpio'])&&i
         </div>
       <footer><?php include 'misc/footer.php';?></footer>
     </div>
-<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="misc/bootstrap.min.js"></script>
 </body>
 </html>

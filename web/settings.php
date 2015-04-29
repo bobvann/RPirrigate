@@ -56,9 +56,9 @@ if(isset($_POST['DeleteUser'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="stylesheet" href="misc/bootstrap.css" media="screen">
     <link rel="stylesheet" href="misc/bootswatch.min.css">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
-    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha1.js"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <script src="//crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
+    <script src="//crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha1.js"></script>
     <script type="text/javascript">
       function HideShow(what){
         if($('#div'+what+'1').css("display")!="none"){
@@ -70,14 +70,38 @@ if(isset($_POST['DeleteUser'])){
         }
       }
       function location_validate(){
-        $.getJSON("http://api.openweathermap.org/data/2.5/weather?q="+$('#txtLocation').val(), function( data ) {
-          if(data.cod==200){
-            frmLocation.submit();
+
+        $.getJSON("//api.worldweatheronline.com/free/v2/search.ashx?key=dadb7eba889f53e8a61dd447cac39&format=json&query="+$('#txtLocation').val(), function( x ) {
+          if(x.data == undefined){
+            $('#divLoc2').css("display","none");
+            $('#divLoc3').css("display","block");
+
+            $('#tbLocations').html("");
+            var i=0;
+            $.each( x.search_api.result, function( key, val ) {
+              if(i<4){
+                var locat=val.areaName[0].value;
+                var country=val.country[0].value;
+
+                $('#tbLocations').append("<tr><td><a href=\"javascript:location_Selected('"+locat+"','"+country+"');\"><img src='misc/img_select.png' /></a>&nbsp;&nbsp;</td>"+
+                  "<td>"+locat+", "+val.region[0].value+", "+country+"</td></tr>");
+              }
+              i++;
+            });
+
           } else{
             $('#bLocation').css("color","red");
             $('#bLocation').html("<?php echo LANG_settings_ERRORLOC;?>");
           }
         });
+      }
+      function location_Back(){
+        $('#divLoc3').css("display","none");
+        $('#divLoc2').css("display","block");
+      }
+      function location_Selected(loc,state){
+        frmLocation.ChangeLocation.value = loc+","+state;
+        frmLocation.submit();
       }
       function isCharOk(str) { 
         //accepted chars are numbers and letters
@@ -360,7 +384,6 @@ if(isset($_POST['DeleteUser'])){
                 </div>
 
                 <div class="panel-body" style="text-align:center;display:none" id="divLoc2">
-                  <form method="post" action="" name="frmLocation">
                     <?php echo "<b>".LANG_settings_CURRENT .":</b> " . $location 
                     . "<br/><br/><b id='bLocation'>". LANG_settings_NEW . "</b><br/>"?>
 
@@ -377,6 +400,17 @@ if(isset($_POST['DeleteUser'])){
                         class="btn btn-primary input-sm" 
                         style="padding-top:4px;margin-top:8px">
                           <?php echo LANG_settings_CONFIRM; ?></a>
+                </div>
+                <div class="panel-body" style="text-align:center;display:none" id="divLoc3">
+                  <form method="post" action="" name="frmLocation">
+                    <input type="hidden" name="ChangeLocation" />
+                    <table id="tbLocations" style="text-align:left;"></table>
+
+
+                    <a href="javascript:location_Back();" 
+                        class="btn btn-warning input-sm" 
+                        style="padding-top:4px;margin-top:8px;position:absolute;bottom:10px;left:150px">
+                          <?php echo LANG_settings_BACK; ?></a>
                   </form>
                 </div>
               </div>
@@ -388,7 +422,7 @@ if(isset($_POST['DeleteUser'])){
     </div>
 
 
-<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="misc/bootstrap.min.js"></script>
 </body>
 </html>
