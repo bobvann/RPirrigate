@@ -48,8 +48,10 @@ define('LANG_settings_BANNER_ADDUSER', "New user succesfully added");
 define('LANG_settings_BANNER_DELETEUSER', "User succesfully deleted");
 define('LANG_settings_BANNER_LANGUAGE', "Language succesfully changed");
 define('LANG_settings_BANNER_LOCATION', "Location succesfully changed");
-define('LANG_settings_BANNER_TIMETOWAIT', "TimeToWait succesfully changed");
+define('LANG_settings_BANNER_WEATHER', "Weather preferences succesfully saved");
 define('LANG_settings_RUSURE', "Are you sure?");
+define('LANG_settings_WEATHER','Weather Forecasts');
+define('LANG_settings_WEATHER_MSG','Choose if to enable the weather forecasts or not.');
 
 define('LANG_module_STATUS','Status');
 define('LANG_module_MODE', 'Mode');

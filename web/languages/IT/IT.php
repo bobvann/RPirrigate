@@ -48,8 +48,10 @@ define('LANG_settings_BANNER_ADDUSER', "Nuovo utente aggiunto con successo");
 define('LANG_settings_BANNER_DELETEUSER', "Utente eliminato con successo");
 define('LANG_settings_BANNER_LANGUAGE', "Lingua cambiata con successo");
 define('LANG_settings_BANNER_LOCATION', "Località cambiata con successo");
-define('LANG_settings_BANNER_TIMETOWAIT', "TimeToWait cambiato con successo");
+define('LANG_settings_BANNER_WEATHER', "Preferenze previsioni meteo salvate con sucesso");
 define('LANG_settings_RUSURE', "Sei sicuro/a?");
+define('LANG_settings_WEATHER','Previsioni Meteo');
+define('LANG_settings_WEATHER_MSG','Qui selezioni se abilitare le previsioni meteo.');
 
 define('LANG_module_STATUS','Stato');
 define('LANG_module_MODE', 'Modalità');

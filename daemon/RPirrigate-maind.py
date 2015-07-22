@@ -51,7 +51,7 @@ try:
 	Settings = SettingClass(DataBase)
 
 	#Weather obj 
-	Weather = WeatherClass(DataBase)
+	Weather = WeatherClass(DataBase, Settings)
 
 	#GPIO obj 
 	GPIO = GPIOClass()
@@ -138,7 +138,7 @@ try:
 		if Settings.reloadWeatherLogsOnNext:
 			logStatus("RELOAD WEATHER")
 			Logs.reload(DataBase)
-			Weather.reload(DataBase)
+			Weather.reload(DataBase, Settings)
 
 			Settings.reloadWeatherLogsOnNext = False
 

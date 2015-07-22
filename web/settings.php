@@ -9,6 +9,7 @@ $lang = $db->select1_setting('Language');
 $location = $db->select1_setting('Location');
 $userID = $_SESSION['RPirrigate_UserID'];
 $hashPWD = $db->select1_hash_password($userID);
+$weather = $db->select1_setting("WeatherEnabled") == "1";
 
 $bannerMessage="";
 //check that new language!=current language also
@@ -45,6 +46,16 @@ if (isset($_POST['ChangePassword_old']) && isset($_POST['ChangePassword_new1']))
 if(isset($_POST['DeleteUser'])){
   $db->delete_user($_POST['DeleteUser']);
   $bannerMessage = LANG_settings_BANNER_DELETEUSER;
+}
+
+if(isset($_POST['WeatherEnabled'])){
+  $db->set_setting('WeatherEnabled',$_POST['WeatherEnabled']);
+  $bannerMessage = LANG_settings_BANNER_WEATHER;
+  $weather = $_POST['WeatherEnabled']== "1";
+  if(defined('SIG_USR1'))
+    posix_kill($pid , SIG_USR1);
+  else
+    posix_kill($pid , SIGUSR1);
 }
 ?>
 <!DOCTYPE html>
@@ -413,6 +424,33 @@ if(isset($_POST['DeleteUser'])){
                           <?php echo LANG_settings_BACK; ?></a>
                   </form>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="bs-component">
+              <div class="panel panel-info">
+                <div class="panel-heading">
+                  <h3 class="panel-title"><?php echo LANG_settings_WEATHER; ?></h3>
+                </div>
+                <div class="panel-body" style="text-align:center;" id="divWeath1">
+                  <form method="post" action="">
+                    <?php echo LANG_settings_WEATHER_MSG ?><br/>
+                    <br/><br/>
+                    <?php  if( $weather ): ?>
+                      <input type="radio" name="WeatherEnabled" value="1" checked /> ON&nbsp;
+                      <input type="radio" name="WeatherEnabled" value="0" /> OFF                      
+                    <?php else: ?>
+                      <input type="radio" name="WeatherEnabled" value="1" /> ON&nbsp;
+                      <input type="radio" name="WeatherEnabled" value="0" checked /> OFF
+                    <?php endif ?>
+                    <br/><br/>
+                    <input type="submit" class="btn btn-primary input-sm" value="<?php echo LANG_settings_CHANGE; ?>" style="padding-top:4px;margin-top:4px" />
+                  </form>
+                </div>
+
+                
               </div>
             </div>
           </div>
