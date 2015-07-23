@@ -91,7 +91,7 @@ try:
 	while(True):
 		#EXECUTE WEATHERD AT 3 AM
 		now = datetime.now()
-		if now.hour==0 and not weatherdExec:
+		if now.hour==0 and not weatherdExec and Settings.weatherEnabled:
 			wd = ""
 			#ATTEMPTS UNTIL GETS OK RESPONSE FROM WEATHERD (should always go fine btw)
 			while wd!="OK\n":
