@@ -22,6 +22,8 @@ $RPirrigate_GPIOok = array(
 
 function isDaemonRunning(){
 	exec("ps aux | grep RPirrigate | grep -v grep", $output);
+	print_r($output);
+	
 	return ($output!="");
 }
 
