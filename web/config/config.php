@@ -20,6 +20,11 @@ $RPirrigate_GPIOok = array(
 	'2B'=>array(2,3,4,5,6,7,8,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,27)
 	);
 
+function isDaemonRunning(){
+	exec("ps aux | grep RPirrigate | grep -v grep", $output);
+	return ($output=="");
+}
+
 function minutesToString($minutes){
 	$weeks = intval($minutes / 10080);
 	$minutes = $minutes % 10080;
