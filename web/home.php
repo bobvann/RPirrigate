@@ -139,6 +139,7 @@ include 'languages/'.$lang.'/'.$lang.'.php';
                     <p><b><?php echo LANG_home_DAEMON;?>: </b> <?php echo LANG_home_DAEMON_OK;?></p>
                   <?php else: ?>
                     <p><b><?php echo LANG_home_DAEMON;?>: </b> <?php echo LANG_home_DAEMON_KO;?></p>
+                    <i class="fa fa-exclamation-triangle" style="font-size: 450%;color:red"></i>
                   <?php endif ?>
                 </div>
               </div>
