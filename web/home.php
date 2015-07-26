@@ -138,7 +138,7 @@ include 'languages/'.$lang.'/'.$lang.'.php';
                   <?php if(isDaemonRunning() ): ?>
                     <p><b><?php echo LANG_home_DAEMON;?>: </b> <?php echo LANG_home_DAEMON_OK;?></p>
                   <?php else: ?>
-                    <p><b><?php echo LANG_home_DAEMON;?>: </b> <?php echo LANG_home_DAEMON_OK;?></p>
+                    <p><b><?php echo LANG_home_DAEMON;?>: </b> <?php echo LANG_home_DAEMON_KO;?></p>
                   <?php endif ?>
                 </div>
               </div>
