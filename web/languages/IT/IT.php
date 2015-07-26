@@ -12,6 +12,10 @@ define('LANG_home_SYSTEM', 'Sistema');
 define('LANG_home_WEATHER', 'Meteo Attuale');
 define('LANG_home_VERSION', 'Versione');
 define('LANG_home_LOADING', 'Caricamento...');
+define('LANG_home_DATETIME','Data/Ora di sistema');
+define('LANG_home_DAEMON', 'Stato del demone');
+define('LANG_home_DAEMON_OK', 'In esecuzione');
+define('LANG_home_DAEMON_KO', 'Fermo');
 
 define('LANG_settings_LANGUAGE', 'Lingua');
 define('LANG_settings_LOCATION', 'Località');
