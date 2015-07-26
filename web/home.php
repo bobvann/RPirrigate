@@ -131,11 +131,11 @@ include 'languages/'.$lang.'/'.$lang.'.php';
             <div class="bs-component">
               <div class="panel panel-info">
                 <div class="panel-heading">
-                  <h3 class="panel-title">RPirrigate</h3>
+                  <h3 class="panel-title">Info</h3>
                 </div>
                 <div class="panel-body" style="text-align:center;">
-                  <img src='misc/logo.png' width='100' /> <br/>
-                  <?php echo "<b>".LANG_home_VERSION.":</b>&nbsp;&nbsp;".VERSION_RPirrigate; ?>
+                  <p><b>DateTime: </b><?php echo date_default_timezone_get(); ?></p>
+                  <p><b>Daemon Status: </b> Running</p>
                 </div>
               </div>
             </div>
