@@ -22,7 +22,7 @@ $RPirrigate_GPIOok = array(
 
 function isDaemonRunning(){
 	exec("ps aux | grep RPirrigate | grep -v grep", $output);
-	return (count($output>0 );
+	return (count($output)>0 );
 }
 
 function minutesToString($minutes){
