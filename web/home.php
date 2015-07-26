@@ -134,8 +134,12 @@ include 'languages/'.$lang.'/'.$lang.'.php';
                   <h3 class="panel-title">Info</h3>
                 </div>
                 <div class="panel-body" style="text-align:center;">
-                  <p><b>DateTime: </b><?php echo date('d/m/Y H:i:s', time()); ?></p>
-                  <p><b>Daemon Status: </b> Running</p>
+                  <p><b><?php echo LANG_home_DATETIME;?> : </b><?php echo date('d/m/Y H:i:s', time()); ?></p>
+                  <?php if(isDaemonRunning() ): ?>
+                    <p><b><?php echo LANG_home_DAEMON;?>: </b> <?php echo LANG_home_DAEMON_OK;?></p>
+                  <?php else: ?>
+                    <p><b><?php echo LANG_home_DAEMON;?>: </b> <?php echo LANG_home_DAEMON_OK;?></p>
+                  <?php endif ?>
                 </div>
               </div>
             </div>
