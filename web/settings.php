@@ -52,6 +52,7 @@ if(isset($_POST['WeatherEnabled'])){
   $db->set_setting('WeatherEnabled',$_POST['WeatherEnabled']);
   $bannerMessage = LANG_settings_BANNER_WEATHER;
   $weather = $_POST['WeatherEnabled']== "1";
+  $pid = $db->select1_daemon_pid();
   if(defined('SIG_USR1'))
     posix_kill($pid , SIG_USR1);
   else
