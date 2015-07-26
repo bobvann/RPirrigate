@@ -14,6 +14,8 @@ define('LANG_home_VERSION', 'Version');
 define('LANG_home_LOADING', 'Loading...');
 define('LANG_home_DATETIME','System date/time');
 define('LANG_home_DAEMON', 'Daemon status');
+define('LANG_home_DAEMON_OK', 'Running');
+define('LANG_home_DAEMON_KO', 'Stopped');
 
 define('LANG_settings_LANGUAGE', 'Language');
 define('LANG_settings_LOCATION', 'Location');
