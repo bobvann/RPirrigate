@@ -47,14 +47,8 @@ class DB_CONN {
 	private $db_conn;
 
 	public function __construct(){
-		$type='mysql';
-		$host='localhost';
-		$name='dbRpirrigate';
-		$user='rpirrigate';
-		$pass='rpirrigate';
 
-		$conn_string = $type . ":host=" . $host . ";dbname=" . $name;
-		$this->db_conn = new PDO($conn_string, $user, $pass);
+		$this->db_conn = new PDO("sqlite:/srv/rpirrigate/data/database.sqlite","","", array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING));
 	}
 
 	public function __destruct(){
@@ -81,6 +75,7 @@ class DB_CONN {
 
 	//Execute Select and returns PDO object to be fetched
 	public function ex_select($sql, $params){
+
 		$sql = $this->db_conn->prepare($sql);
 
 		$sql->execute($params);
@@ -91,6 +86,7 @@ class DB_CONN {
 	//Executes  select and returns first row of first column
 	//(for queries which get only one result)
 	public function ex_select_getFirst($sql, $params){
+
 		$sql =$this->db_conn->prepare($sql);
 
 		$sql->execute($params);
@@ -123,10 +119,10 @@ class DB_CONN {
 	//returns PDO to fetch of existent modules
 	public function select_modules($id = NULL){
 		if ($id==NULL){
-			 $sql = "SELECT * FROM tbModules ORDER BY Name ASC";
+			 $sql = "SELECT * FROM tbModules ORDER BY Name ASC;";
 			 $params = array();
 		} else {
-			$sql = "SELECT * FROM tbModules WHERE ModuleID = :id ORDER BY Name ASC";
+			$sql = "SELECT * FROM tbModules WHERE ModuleID = :id ORDER BY Name ASC;";
 			$params = array(':id'=>$id);
 		}
 		
@@ -183,36 +179,41 @@ class DB_CONN {
 	}
 
 	public function select_module_lastLog($module){
-		$sql = "(SELECT * ";
+		$sql = "SELECT * ";
 		$sql.= "FROM tbLogs ";
-		$sql.= "WHERE ModuleID = :module ) ";
-		$sql.= "UNION (SELECT * FROM tbLogs WHERE isRain = 1) ";
+		$sql.= "WHERE ModuleID = :module ";
+		$sql.= "UNION SELECT * FROM tbLogs WHERE isRain = 1 ";
 		$sql.= "ORDER BY Time DESC LIMIT 1";
 
 		return $this->ex_select($sql,array(':module'=>$module));
 	}
 
 	public function select_module_lastLogs($module){
-		$sql = "(SELECT * ";
+		$sql = "SELECT * ";
 		$sql.= "FROM tbLogs ";
-		$sql.= "WHERE Liters > -1 AND ModuleID = :module )";
-		$sql.= "UNION (SELECT * FROM tbLogs WHERE isRain = 1)";
+		$sql.= "WHERE Liters > -1 AND ModuleID = :module ";
+		$sql.= "UNION SELECT * FROM tbLogs WHERE isRain = 1 ";
 		$sql.= "ORDER BY Time DESC LIMIT 6";
 
 		return $this->ex_select($sql,array(':module'=>$module));
 	}
 
 	public function select_module_logs($module){
-		$sql = "(SELECT * ";
+		$sql = "SELECT * ";
 		$sql.= "FROM tbLogs ";
-		$sql.= "WHERE Liters > -1 AND ModuleID = :module )";
-		$sql.= "UNION (SELECT * FROM tbLogs WHERE isRain = 1)";
+		$sql.= "WHERE Liters > -1 AND ModuleID = :module ";
+		$sql.= "UNION SELECT * FROM tbLogs WHERE isRain = 1 ";
 		$sql.= "ORDER BY Time DESC";
 
 		return $this->ex_select($sql,array(':module'=>$module));
 	}
 
 	public function query_module_manual_update($id, $act, $val){
+		if ($act!=1 && $act!="1")
+			$act = "0";
+		if($val!=1 && $val!="1")
+			$val = "0";
+
 		$sql = "UPDATE tbModules ";
 		$sql.= "SET ManualACT = :act, ManualVAL = :val ";
 		$sql.= "WHERE ModuleID = :id";
@@ -236,7 +237,7 @@ class DB_CONN {
 	}
 
 	public function select_events($module){
-		return $this->ex_select("SELECT * FROM tbEvents WHERE ModuleID = :module ", 
+		return $this->ex_select("SELECT * FROM tbEvents WHERE ModuleID = :module ;", 
 								array(':module'=>$module));
 	}
 
@@ -251,15 +252,15 @@ class DB_CONN {
 	}
 
 	public function select1_event_nexttime($eventID, $interval){
-		$sql = "SELECT DATE(Time + INTERVAL :min MINUTE) FROM tbLogs WHERE EventID = :event ORDER BY Time DESC LIMIT 1";
-		
-		$executed = $this->ex_select_getFirst($sql, array(':event'=>$eventID, ':min'=>$interval));
+		$sql = "SELECT strftime('%Y-%m-%d' , datetime(Time, '+" . $interval . " minutes')) FROM tbLogs WHERE EventID = :event ORDER BY Time DESC LIMIT 1;";
+
+		$executed = $this->ex_select_getFirst($sql, array(':event'=>$eventID ));
 
 		if($executed){
-			$hour = $this->ex_select_getFirst("SELECT Hour FROM tbEvents WHERE EventID = :event",array(':event'=>$eventID));
+			$hour = $this->ex_select_getFirst("SELECT Hour FROM tbEvents WHERE EventID = :event ;",array(':event'=>$eventID));
 			return $executed . " " . $hour;
 		} else{
-			$sql = "SELECT CONCAT(FirstExecution, ' ', Hour) FROM tbEvents WHERE EventID = :event";
+			$sql = "SELECT (FirstExecution || ' ' || Hour) FROM tbEvents WHERE EventID = :event ;";
 			return $this->ex_select_getFirst($sql, array(':event'=>$eventID));
 		}
 	}

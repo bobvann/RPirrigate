@@ -29,7 +29,6 @@ if(isset($_POST['ManualSave']) && $_POST['ManualSave']=='true'){
   $act  = isset($_POST['ManualACT']);
   $db->query_module_manual_update($currModuleID, $act, $val);
   $bannerMessage = LANG_module_BANNER_MANUAL;
-  //*** ALSO SEND SIGUSR2 TO THE DAEMON TO MAKE IT RELOAD MANUALS
   $pid = $db->select1_daemon_pid();
   //Newer php version use SIG_NAME, newer SIGNAME
   if(defined('SIG_USR2'))
@@ -42,7 +41,6 @@ if(isset($_POST['ManualSave']) && $_POST['ManualSave']=='true'){
 if (isset($_POST['Settings_Throughtput']) && isset($_POST['Settings_Name']) && isset($_POST['Settings_GPIO'])){
   $db->query_module_settings_update($currModuleID, $_POST['Settings_Name'], $_POST['Settings_GPIO'], $_POST['Settings_Throughtput']);
   $bannerMessage = LANG_module_BANNER_SETTINGS;
-  //*** ALSO SEND SIGUSR1 TO THE DAEMON TO MAKE IT RELOAD SETTINGS!!
   $pid = $db->select1_daemon_pid();
   //Newer php version use SIG_NAME, newer SIGNAME
   if(defined('SIG_USR1'))
@@ -504,7 +502,7 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
                 <div class="panel-body">
                   <?php
                   if (!$NoLogsYet){ ?>
-                    <table style="width:100%;">
+                    <table style="width:100%;font-size:90%;">
                       <tr>
                         <td><b><?php echo LANG_module_DATE;?></b></td>
                         <td><b><?php echo LANG_module_TYPE;?></b></td>

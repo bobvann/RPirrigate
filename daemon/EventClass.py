@@ -39,11 +39,13 @@ class EventClass:
 
 		if len(thisLogTimes)>0:
 			last = thisLogTimes[-1]
-			if type(last) is str:
-				last = datetime.strptime(log.time, '%Y-%m-%d %H:%M:%S')
+			if (type(last) is str) or (type(last) is unicode):
+				last = datetime.strptime(last, '%Y-%m-%d %H:%M:%S')
 			next= last + timedelta(minutes=self.timeInterval)
 
 			return datetime(next.year, next.month, next.day, self.hour.hour, self.hour.minute)
 		else:
 			#here if not found yet
-			return datetime.strptime(str( str(self.firstExecution) + " " + str(self.hour)), '%Y-%m-%d %H:%M:%S')
+			datehour = str(self.firstExecution) + " " + str(self.hour)
+			
+			return datetime.strptime(datehour , '%Y-%m-%d %H:%M:%S')

@@ -1,5 +1,5 @@
 #DEFAULT LIBRARIES
-import os, signal, subprocess, sys
+import os, signal, subprocess, sys, linecache
 from time import sleep
 from datetime import datetime
 
@@ -33,7 +33,15 @@ def logStatus(text):
 		f.write(str(datetime.now())+" "+text+"\n")
 
 #LOG ON LOGFILE error
-def logError(text):
+def logError():
+	exc_type, exc_obj, tb = sys.exc_info()
+	f = tb.tb_frame
+	lineno = tb.tb_lineno
+	filename = f.f_code.co_filename
+	linecache.checkcache(filename)
+	line = linecache.getline(filename, lineno, f.f_globals)
+
+	text = "EXCEPTION IN (" + str(filename) + ", LINE " + str(lineno) + " '" + str(line.strip()) + "'):" + str(exc_obj);
 	with open("/var/log/rpirrigate/error.log","a") as f: 
 		f.write(str(datetime.now())+" "+text+"\n")
 
@@ -97,7 +105,6 @@ try:
 			while wd!="OK\n":
 				logStatus("FETCH WEATHER")
 				wd = subprocess.check_output(["python", "/srv/rpirrigate/daemon/RPirrigate-weatherd.py"])
-				print wd
 				if wd!="OK\n":
 					sleep((datetime.now().second % 12)+3) #waits pseudo-random seconds 3-15 before attempting again
 					logStatus("FETCH WEATHER FAILED")
@@ -186,9 +193,9 @@ try:
 		#print ""
 
 		sleep(60)
-except:
-	s = ""
-	for x in sys.exc_info():
-		s = s + str(x)
-	logError(s)
+except Exception:
+	logError()
 	
+
+
+

@@ -1,0 +1,104 @@
+﻿RPirrigate INSTALL GUIDE
+(SQLITE version, august 2015)
+
+Please note
+
+$ = normal user command
+# = super user command ( root / sudo )
+
+RPirrigate GitHub ZIP downloaded and extracted inside filder MYDIR
+
+
+1 install needed packages
+
+# apt-get install lighttpd php5-common php5-cgi php5 php-pear php5-sqlite rpi.gpio sqlite3
+
+2. enable php on lighttpd
+
+# lighttpd-enable-mod fastcgi
+# lighttpd-enable-mod fastcgi-php
+
+3. create folder/srv/rpirrigate 
+
+# mkdir -p /srv/rpirrigate
+
+4. copy inside that folder the 3 needed folders
+
+# cp -R MIADIR/data /srv/rpirrigate
+# cp -R MIADIR/daemon /srv/rpirrigate
+# cp -R MIADIR/web /srv/rpirrigate
+
+5. give right permissions
+
+# chown -R www-data:www-data /srv/rpirrigate
+# chmod -R 775 /srv/rpirrigate
+
+6. create log files and give permissions
+
+# mkdir /var/log/rpirrigate
+# touch /var/log/rpirrigate/status.log
+# touch /var/log/rpirrigate/error.log
+# chown -R www-data:www-data /var/log/rpirrigate
+# chmod -R 775 /var/log/rpirrigate
+
+7. copy the logrotate file
+
+# cp MIADIR/install/logrotate.erb /etc/logrotate.d/rpirrigate
+
+8. give permissions
+
+# chmod 755 /etc/logrotate.d/rpirrigate
+# chown root:root /etc/logrotate.d/rpirrigate
+
+9. download and unzip pigpio
+
+$ wget abyz.co.uk/pigpio/pigpio.zip
+$ unzip pigpio.zip
+
+10. compile pigpio
+
+( $ cd PIGPIO )
+
+$ make
+# make install
+
+
+11. copy init files
+
+
+# cp MIADIR/install/init.d.erb /etc/init.d/rpirrigate
+# cp MIADIR/install/pigpiod.erb /etc/init.d/pigpiod
+
+
+12. give permissions
+
+# chmod 755 /etc/init.d/pigpiod
+# chmod 755 /etc/init.d/rpirrigate
+# chown root:root /etc/init.d/pigpiod
+# chown root:root /etc/init.d/rpirrigate
+
+13. (If you want / already have a webserver on port 80 ) : change lighttpd document root and port
+
+# nano /etc/lighttpd/lighttpd.conf 
+
+Edit the line
+
+server.port   = 80    →   server.port    = 667
+
+Edit the line
+
+server.document-root = “/var/www”   →  server.document-root = “/srv/rpirrigate/web”
+
+Close and save ( CTRL+X, Y, INVIO)
+
+
+14. Enable services
+
+# insserv pigpiod
+# insserv rpirrigate
+
+15. Start services
+
+# service pigpiod start
+# service rpirrigate start
+# service lighttpd restart

@@ -38,7 +38,8 @@ class ModuleClass:
 		for ev_id in ev_ids:
 			self.Events.append(EventClass(DataBase, ev_id))
 		for ev in self.Events:
-			ev.duration = int(ev.liters/self.throughtput*60) #Daemon runs on more than 1 min, so no sense of decimal minutes
+			ev.duration = int( float(ev.liters)/float(self.throughtput) * 60 )
+			#ev.duration = int(ev.liters) #Daemon runs on more than 1 min, so no sense of decimal minutes
 
 		#DEBUG
 		#print "MODULE SETTINGS " + str(self.id) + " RELOADED"
@@ -90,6 +91,7 @@ class ModuleClass:
 				for ev in self.Events:
 					if now > ev.nextExec(Logs):
 						return ev.id
+
 			return False
 
 	def shouldCloseNow(self):
@@ -105,6 +107,7 @@ class ModuleClass:
 				try:
 					for ev in self.Events:
 						if ev.id == self.openEventID:
+
 							if (self.openTime + timedelta(minutes=ev.duration)) < now:
 								return True
 							else:

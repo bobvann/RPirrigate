@@ -11,14 +11,8 @@ class GPIOClass:
 
 	def __init__(self):
 
-		self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-		self.sock.connect(('127.0.0.1', 8888))
-
+		pass
 	def openWater(self, pin):
-		pin = int(pin)
-		self.sock.send(struct.pack('IIII', 4, pin, self.STATE_ON, 0))
-
+		pass
 	def closeWater(self, pin):
-		pin = int(pin)
-		self.sock.send(struct.pack('IIII', 4, pin, self.STATE_OFF, 0))
+		pass

@@ -1,0 +1,39 @@
+
+Tutti coloro che hanno una versione precedente di RPirrigate installata 
+(quindi con MySQL come database) 
+
+* se vogliono salvare i dati dell'installazione corrente *
+(preferenze, moduli, piani di irrigazione, log delle irrigazioni )
+
+DEVONO migrare il database
+
+
+Per fare ciò, 
+
+DOPO aver aggiornato i file di RPirrigate (sostituito le cartelle daemon, web ed aggiunto la cartella data )
+
+PRIMA di aver riavviato RPirrigate (comando service rpirrigate restart )
+
+COMANDI NECESSARI:
+
+posizionarsi nella cartella install all'interno del pacchetto scaricato ed eseguire i seguenti comandi
+
+# chmod a+x mysql2sqlite.sh
+
+# ./mysql2sqlite.sh -u root dbRpirrigate | sqlite3 /srv/rpirrigate/data/database.sqlite
+
+
+NOTA: se avete la password all'utente root di mysql, invece del precedente comando usate questo:
+
+
+# ./mysql2sqlite.sh -u root -p dbRpirrigate | sqlite3 /srv/rpirrigate/data/database.sqlite
+
+(vi chiederà la password )
+
+ORA... se non usate mysql per altri utilizzi potete disinstallarlo
+
+N.B. non mi assumo rischi se usate MYSQL per altre applicazioni e lo disinstallate!
+
+# apt-get purge mysql
+# apt-get --purge autoremove
+
