@@ -26,6 +26,7 @@ BEGIN {
 	print "DELETE FROM tbModules;"
 	print "DELETE FROM tbRainForecasts;"
 	print "DELETE FROM tbLogin;"
+	print "DELETE FROM tbSettings;"
 
 }
 
