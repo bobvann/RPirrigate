@@ -20,7 +20,7 @@ BEGIN {
 	print "PRAGMA synchronous = OFF;"
 	print "PRAGMA journal_mode = MEMORY;"
 	print "BEGIN TRANSACTION;"
-	print "DELETE FROM tbEvents;";
+	print "DELETE FROM tbEvents;"
 	print "DELETE FROM tbLogin;"
 	print "DELETE FROM tbLogs;"
 	print "DELETE FROM tbModules;"
