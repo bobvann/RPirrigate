@@ -61,39 +61,6 @@ The web interface is written in PHP and uses a customized version of lighttpd we
 Web interface and daemon communicate using a MySQL database. The web interface sends unix signals to the daemon when it has to reload things from the database, so everything is optimized and there is no useless access to the database.</p>
 
 <h3>
-<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h3>
-
-<p>The aim of the installation is to be as easy as possible, so I decided to use a chef cookbook to do that.
-if you don't know what chef is, I suggest you to read about it, because it's awesome. (In short, it helps you to install and configure servers)
-So, to install RPirrigate follow these steps on your Raspberry Pi:
-1. Install chef. When asking for the chef server, just hit enter. Once installed it will give an error about the chef server. Don't care about it, for how we use chef it is ok.</p>
-
-<pre><code>$ sudo apt-get install -y chef
-</code></pre>
-
-<ol>
-<li>Download the chef recipe from my website, decompress it and go inside the directory</li>
-</ol>
-
-<pre><code>$ wget http://bobvann.noip.me/repo/rpirrigate/rpirrigate-chef.tar.gz
-$ tar zxf rpirrigate-chef.tar.gz
-$ cd rpirrigate-chef
-</code></pre>
-
-<ol>
-<li>Execute the chef cookbook. This may take a while because it has to install everything, compile PIGPIO etc.</li>
-</ol>
-
-<pre><code>$ sudo chef-solo -c solo.rb
-</code></pre>
-
-<ol>
-<li>Post-installation
-It should now be installed. You can go with your browser to http://:883
-You can login using default credentials admin/admin. Once logged in, please go to Settings and set up the location for the weather. I suggest you to change access credentials too.</li>
-</ol>
-
-<h3>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h3>
 
 <p>The code is released under the following license: Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)</p>
