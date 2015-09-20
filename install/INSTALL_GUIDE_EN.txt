@@ -52,12 +52,12 @@ RPirrigate GitHub ZIP downloaded and extracted inside filder MYDIR
 
 9. download and unzip pigpio
 
-$ wget abyz.co.uk/pigpio/pigpio.zip
-$ unzip pigpio.zip
+$ wget https://github.com/joan2937/pigpio/archive/master.zip
+$ unzip master.zip
 
 10. compile pigpio
 
-( $ cd PIGPIO )
+( $ cd pigpio-master )
 
 $ make
 # make install
