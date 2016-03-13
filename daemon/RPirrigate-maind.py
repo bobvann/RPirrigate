@@ -11,7 +11,6 @@ from LogsClass import LogsClass
 from WeatherClass import WeatherClass
 from GPIOClass import GPIOClass
 
-
 #ON SIGUSR1 UPDATES SETTINGS + MODULE INFOS,
 def handUSR1(signum, frame):
 	Settings.reloadSettingsOnNext = True
@@ -49,6 +48,9 @@ def logError():
 signal.signal(signal.SIGUSR1, handUSR1)
 signal.signal(signal.SIGUSR2, handUSR2)
 signal.signal(signal.SIGHUP, handHUP)
+
+#WAIT FOR GPIO DAEMON TO CORRECTLY ACTIVATE
+sleep(10)
 
 #CATCH **ANY** ERROR AND WRITE ERROR FILE 
 try:
