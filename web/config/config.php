@@ -1,6 +1,6 @@
 <?php
 // This file includes other config files
-define ('VERSION_RPirrigate', '0.0.1beta');
+define ('VERSION_RPirrigate', '0.1.0');
 
 $RPirrigate_supported_languages= array(
 	'EN'=>'English',
@@ -21,7 +21,7 @@ $RPirrigate_GPIOok = array(
 	);
 
 function isDaemonRunning(){
-	exec("ps aux | grep RPirrigate | grep -v grep", $output);
+	exec("ps aux | grep RPirrigate-maind | grep -v grep", $output);
 	return (count($output)>0 );
 }
 
