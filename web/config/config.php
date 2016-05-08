@@ -20,6 +20,32 @@ $RPirrigate_GPIOok = array(
 	'2B'=>array(2,3,4,5,6,7,8,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,27)
 	);
 
+function apiBaseChecks(){
+    if($_SERVER['REQUEST_METHOD']!="POST"){
+        http_response_code(405);die(); //not allowed
+    }
+
+    if(!isset($_POST['username'])){
+        http_response_code(400);die();
+    }
+    if(!isset($_POST['password'])){
+        http_response_code(400);die();
+    }
+
+    $db = new DB_CONN();
+
+    $user = $_POST['username'];
+    $pass = $_POST['password'];
+    $userID = 0;
+    $logged = $db->login($user, $pass);
+
+    if (!($logged>0)){
+    	http_response_code(401);die();
+    	$userID = $logged['UserID'];
+
+    }
+}
+
 function isDaemonRunning(){
 	exec("ps aux | grep RPirrigate-maind | grep -v grep", $output);
 	return (count($output)>0 );

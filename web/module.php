@@ -30,7 +30,7 @@ if(isset($_POST['ManualSave']) && $_POST['ManualSave']=='true'){
   $db->query_module_manual_update($currModuleID, $act, $val);
   $bannerMessage = LANG_module_BANNER_MANUAL;
   $pid = $db->select1_daemon_pid();
-  //Newer php version use SIG_NAME, newer SIGNAME
+  //some php version use SIG_NAME, other SIGNAME
   if(defined('SIG_USR2'))
     posix_kill($pid , SIG_USR2);
   else
