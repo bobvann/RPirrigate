@@ -13,7 +13,7 @@ if(!isset($_POST['moduleID'])){
 
 $currModuleID = $_POST['moduleID'];
 
-//If module doesn't exist, go to Home
+//If module doesn't exist, not found
 if(!$db->select1_module_exists($currModuleID)){
     http_response_code(404); //not found
     die();

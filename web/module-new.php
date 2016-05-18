@@ -161,8 +161,6 @@ if(isset($_POST['name'])&&isset($_POST['description'])&&isset($_POST['gpio'])&&i
                             <option value="">...</option>
                             <?php
                             $rev = trim(exec("cat /proc/cpuinfo | grep Revision | cut -f 2 -d: "));
-                            $rev = "0003"; //ONLY FOR TESTING ON NON RPI MACHINES
-                            
                             $used = array();
                             $qry = $db->select_modules_GPIOs_used();
                             while($row = $qry->fetch(PDO::FETCH_NUM)) array_push($used, $row[0]);

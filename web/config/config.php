@@ -41,8 +41,6 @@ function apiBaseChecks(){
 
     if (!($logged>0)){
     	http_response_code(401);die();
-    	$userID = $logged['UserID'];
-
     }
 }
 
@@ -262,6 +260,45 @@ class DB_CONN {
 
 	}
 
+	public function query_module_update_api($id, $updateData){
+		if(count($updateData)>0){
+			$params = [];
+			$sql = "UPDATE tbModules SET ";
+
+			if(isset($updateData['Name'])){
+				$sql .= "Name = :Name, ";
+				$params[':Name'] = $updateData['Name'];
+			}
+			if(isset($updateData['Description'])){
+				$sql .= "Description = :description, ";
+				$params[':description'] = $updateData['Description'];
+			}
+			if(isset($updateData['GPIO'])){
+				$sql .= "GPIO = :GPIO, ";
+				$params[':GPIO'] = $updateData['GPIO'];
+			}
+			if(isset($updateData['Throughtput'])){
+				$sql .= "Throughtput = :Throughtput, ";
+				$params[':Throughtput'] = $updateData['Throughtput'];
+			}
+			if(isset($updateData['ManualACT'])){
+				$sql .= "ManualACT = :ManualACT, ";
+				$params[':ManualACT'] = $updateData['ManualACT']?1:0;
+			}
+			if(isset($updateData['ManualVAL'])){
+				$sql .= "ManualVAL = :ManualVAL, ";
+				$params[':ManualVAL'] = $updateData['ManualVAL']?1:0;
+			}
+
+
+			$sql = substr($sql,0,-2) . " WHERE ModuleID = :ModuleID";
+
+			$params[':ModuleID'] = $id;
+
+
+			return $this->ex_query($sql, $params);
+		}
+	}
 	public function select_events($module){
 		return $this->ex_select("SELECT * FROM tbEvents WHERE ModuleID = :module ;", 
 								array(':module'=>$module));
@@ -327,6 +364,11 @@ class DB_CONN {
 
 	public function select1_daemon_pid(){
 		return $this->ex_select_getFirst("SELECT Value FROM tbSettings WHERE Name = 'LastPID'",array());
+	}
+
+	public function select_rainforecasts(){
+		$sql = "SELECT ForecastID, Time, Liters FROM tbRainForecasts";
+		return $this->ex_select($sql,array());
 	}
 }
 ?>

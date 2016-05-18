@@ -90,3 +90,19 @@ ALL Web API calls return JSON.
   - returning the information available on the module page
   - parameters: username, password and POST parameter moduleID
   - returning status code 400 + blank response if no "moduleID" POST parameter is available
+  
+##### updateModule
+  - URL : http://<ip:port>/api/updateModule.php
+  - updating the information for a module
+  - parameters: username, password and POST parameter moduleID
+  - returning status code 400 + blank response if no "moduleID" POST parameter is available
+  - other parameters as many as you want to update: for each parameter of the following list it will update:
+    - U_Description
+    - U_Name
+    - U_GPIO         (MUST BE VALID FOR THE RPI MODEL AND NOT ALREADY USED - OTHERWISE WILL RETURN status code 400)
+    - U_Throughtput  (MUST BE VALID FLOAT NUMBER > 0 - OTHERWISE WILL RETURN status code 400)
+    - U_ManualACT ( 1/0 ) other values (including 'false') will be evalued to TRUE
+    - U_ManualVAL (same)
+  - ManualACT and ManualVAL work this way: if ManualACT is 1 (manual activated), the valve will be put in the state said by ManualVAL
+  So if ManualVAL is 1, will open water, if ManualVAL is 0, will close water.
+  - PLEASE NOTE that this will make the daemon reload settings and/or manual state. DO NOT MISUSE this web service.

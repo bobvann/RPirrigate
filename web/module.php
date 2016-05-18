@@ -409,7 +409,7 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
                       <td><b><?php echo LANG_module_INTERVAL ?></b></td>
                       <td><b><?php echo LANG_module_IRRIG_NEXT ?></b></td>
                       <td></td>
-                    </td>
+                    </tr>
                     <?php
                     $qry = $db->select_events($currModuleID);
                     $i=0;
