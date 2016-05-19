@@ -74,11 +74,15 @@ if(isset($_POST['WeatherEnabled'])){
     <script type="text/javascript">
       function HideShow(what){
         if($('#div'+what+'1').css("display")!="none"){
-          $('#div'+what+'1').css("display","none");
-          $('#div'+what+'2').css("display","block");
+          $('#div'+what+'1').fadeTo('fast',0,function(){
+            $('#div'+what+'1').css("display","none");
+            $('#div'+what+'2').fadeTo('fast',1);
+          });
         } else {
-          $('#div'+what+'1').css("display","block");
-          $('#div'+what+'2').css("display","none");
+          $('#div'+what+'2').fadeTo('fast',0,function(){
+            $('#div'+what+'2').css("display","none");
+            $('#div'+what+'1').fadeTo('fast',1);
+          });
         }
       }
       function location_validate(){

@@ -101,6 +101,8 @@ define('LANG_module_ERR1', "Compila almeno uno dei campi Settimane/Giorni/Ore");
 define('LANG_module_ERR2', "Compila il campo Data");
 define('LANG_module_ERR3', "Compila il campo Ora");
 define('LANG_module_ERR4', "Compila il campo Litri");
+define('LANG_module_DELETE_BTN', "Elimina Modulo");
+define('LANG_module_DELETE_ALERT', "Sei sicuro? Questa azione non può essere annullata!");
 
 define('LANG_modulenew_IMAGEFILE', 'File immagine');
 define('LANG_modulenew_IMAGE_LOGODEFAULT', "Se non carichi alcun file, verr&agrave; usato quello di default");

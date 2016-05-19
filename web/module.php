@@ -19,6 +19,11 @@ if(!$db->select1_module_exists($currModuleID)){header('location: home.php'); die
 
 $bannerMessage="";
 
+if(isset($_POST['DeleteThisModule']) && $_POST['DeleteThisModule'] == 'YES'){
+  $db->query_module_delete($currModuleID);
+  header('location: home.php');die();
+}
+
 if(isset($_POST['Description'])){
   $db->query_module_description_update($currModuleID,nl2br($_POST['Description']));
   $bannerMessage = LANG_module_BANNER_DESCRIPTION;
@@ -96,15 +101,19 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
     <script type="text/javascript">
       function HideShow(what){
         if($('#div'+what+'1').css("display")!="none"){
-          $('#div'+what+'1').css("display","none");
-          $('#div'+what+'2').css("display","block");
+          $('#div'+what+'1').fadeTo('fast',0,function(){
+            $('#div'+what+'1').css("display","none");
+            $('#div'+what+'2').fadeTo('fast',1);
+          });
         } else {
-          $('#div'+what+'1').css("display","block");
-          $('#div'+what+'2').css("display","none");
+          $('#div'+what+'2').fadeTo('fast',0,function(){
+            $('#div'+what+'2').css("display","none");
+            $('#div'+what+'1').fadeTo('fast',1);
+          });
         }
       }
       function validate_Settings(){
-        alert("Vedere come validare GPIO... Nome Solo caratteri,spazi e numeri, Portata solo numeri...")
+        //alert("Vedere come validare GPIO... Nome Solo caratteri,spazi e numeri, Portata solo numeri...")
 
         //creo un array di tutti i GPIO del RPI(PROBLEMA: GESTIRE B+,2 hanno piu GPIO)
         //poi creare un array di tutti quelli usati (vedere nel DB)
@@ -127,8 +136,13 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
         frmManual.ManualVAL.value = ManValCHK;
       }
       function Events_HideShow(from, to){
-        $('#divEvents'+from).css("display","none");
-          $('#divEvents'+to).css("display","block");
+        $('#divEvents'+from).fadeTo('fast',0,function(){
+          $('#divEvents'+from).css("display","none");
+          $('#divEvents'+to).fadeTo('fast',1,function(){
+            $('#divEvents'+to).css("display","block");
+          });
+        });
+
       }
 
       function Events_Validate1(){
@@ -153,14 +167,27 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
 
       function Logs_ShowHide(){
         if($('#divRowLogs').css('display')!= "block" ){
-          $('#divRow1').css('display','none');
-          $('#divRow2').css('display','none');
-          $('#divRowLogs').css('display','block');
-        } else {
-          $('#divRow1').css('display','block');
-          $('#divRow2').css('display','block');
-          $('#divRowLogs').css('display','none');
 
+          $('#divRow1').fadeTo('fast',0,function(){
+            $('#divRow1').css('display','none');
+          });
+          $('#divRow2').fadeTo('fast',0,function(){
+            $('#divRow2').css('display','none');
+            $('#divRowLogs').css('display','block').fadeTo('fast',1);
+          });
+        } else {
+          $('#divRowLogs').fadeTo('fast',0,function(){
+            $('#divRowLogs').css('display','none');
+
+            $('#divRow1').css('display','block').fadeTo('fast',1);
+            $('#divRow2').css('display','block').fadeTo('fast',1);
+          });
+        }
+      }
+
+      function DeleteThisModule(){
+        if(confirm("<?php echo LANG_module_DELETE_ALERT?>")){
+          frmDelete.submit();
         }
       }
     </script>
@@ -550,9 +577,19 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
                   </table>
                   <a href="javascript:HideShow('Settings');" 
                         class="btn btn-primary input-sm" 
-                        style="padding-top:4px;position:absolute;bottom:0;margin-left:-20px;margin-bottom:20px">
+                        style="padding-top:4px;margin-top:10px">
                           <?php echo LANG_module_EDIT; ?></a>
-                  
+                  <a href="javascript:DeleteThisModule();"
+                     class="btn btn-danger input-sm"
+                     style="padding-top:4px;margin-top:10px;margin-left:20px;">
+                    <?php echo LANG_module_DELETE_BTN; ?></a>
+
+
+                  <form name="frmDelete" action="" method="POST">
+                    <input type="hidden" name="DeleteThisModule" value="YES" />
+                  </form>
+
+
                 </div>
                 <div class="panel-body" style="text-align:center;display:none" id="divSettings2">
                 <form name="frmSettings" action="" method="post">

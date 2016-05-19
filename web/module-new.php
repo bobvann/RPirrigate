@@ -45,12 +45,18 @@ if(isset($_POST['name'])&&isset($_POST['description'])&&isset($_POST['gpio'])&&i
         alert("<?php echo LANG_modulenew_ERR2; ?>");
         return;
       }
-      $('#fsStep1').css('display','none');
-      $('#fsStep2').css('display','block');
+      $('#fsStep1').fadeTo('fast',0,function(){
+        $('#fsStep1').css('display','none');
+        $('#fsStep2').css('display','block').fadeTo('fast',1);
+      });
+
+
     }
     function Step2_1(){
-      $('#fsStep2').css('display','none');
-      $('#fsStep1').css('display','block');
+      $('#fsStep2').fadeTo('fast',0,function(){
+        $('#fsStep2').css('display','none');
+        $('#fsStep1').css('display','block').fadeTo('fast',1);
+      });
     }
     function Step2_end(){
       var gpio = $('#txtGPIO').val();

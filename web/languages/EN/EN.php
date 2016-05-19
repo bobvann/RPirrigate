@@ -101,6 +101,8 @@ define('LANG_module_ERR1', "Please fill up at least one of the Weeks/Days/Hours 
 define('LANG_module_ERR2', "Please fill up the Start Data field");
 define('LANG_module_ERR3', "Please fill up the Start Hour field");
 define('LANG_module_ERR4', "Please fill up the Liters field");
+define('LANG_module_DELETE_BTN', "Delete Module");
+define('LANG_module_DELETE_ALERT', "Are you sure? This action cannot be undone!");
 
 define('LANG_modulenew_IMAGEFILE', 'Image File');
 define('LANG_modulenew_IMAGE_LOGODEFAULT', "If you don't upload any image, default will be used");

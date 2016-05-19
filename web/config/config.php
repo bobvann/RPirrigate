@@ -333,6 +333,11 @@ class DB_CONN {
 		return $this->ex_query($sql, array(':id'=>$event));
 	}
 
+	public function query_module_delete($module){
+		$sql = "DELETE FROM tbModules WHERE ModuleId = :id";
+		return $this->ex_query($sql, array(':id'=>$module));
+	}
+
 	public function query_module_add($name, $description, $gpio, $throughtput, $image){
 		$sql = "INSERT INTO tbModules (Name, Description, GPIO, Throughtput) ";
 		$sql.= "VALUES (:name, :description, :gpio, :throughtput)";
