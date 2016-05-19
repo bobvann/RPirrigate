@@ -366,8 +366,8 @@ class DB_CONN {
 		return $this->ex_select_getFirst("SELECT Value FROM tbSettings WHERE Name = 'LastPID'",array());
 	}
 
-	public function select_rainforecasts(){
-		$sql = "SELECT ForecastID, Time, Liters FROM tbRainForecasts";
+	public function select_nextrainforecasts(){
+		$sql = "SELECT ForecastID, Time, Liters FROM tbRainForecasts WHERE Time > strftime('%Y-%m-%d %H:%M:%S','now','localtime')";
 		return $this->ex_select($sql,array());
 	}
 }

@@ -28,7 +28,7 @@ include 'languages/'.$lang.'/'.$lang.'.php';
 
         $.getJSON("//api.worldweatheronline.com/free/v2/weather.ashx?q="+loc+"&key=dadb7eba889f53e8a61dd447cac39&format=json&fx=no&lang="+lang, function( x ) {
           $('#imgWeather').attr("src",x.data.current_condition[0].weatherIconUrl[0].value.substr(5));
-          $('#spanWeather').html("<br/><b>"+loc+"</b><br/>"+x.data.current_condition[0]['lang_'+lang][0].value+"<br/>"+Math.round(x.data.current_condition[0].temp_C)+" C");
+          $('#spanWeather').html("<b>"+loc+"</b><br/>"+Math.round(x.data.current_condition[0].temp_C)+" C,  "+x.data.current_condition[0]['lang_'+lang][0].value);
           $('#pWeather').remove();
         });
       </script>
@@ -112,17 +112,45 @@ include 'languages/'.$lang.'/'.$lang.'.php';
                 <div class="panel-heading">
                   <h3 class="panel-title"><?php echo LANG_home_WEATHER; ?></h3>
                 </div>
-                <?php if($location!=""): ?>
-                  <div class="panel-body" style="text-align:center;">
-                    <img width='70' src='' id='imgWeather' />
-                    <span id='spanWeather'></span>
-                    <p id='pWeather'><?php echo LANG_home_LOADING;?></p>
-                  </div>
-                <?php else: ?>
-                  <div class="panel-body" style="text-align:center;">
-                    Please select your location in settings.
-                  </div>
-                <?php endif ?>
+                <div class="panel-body" style="padding-top:0px">
+
+                  <?php if($location!=""): ?>
+                    <table width="100%" border="0" style="text-align:center;">
+                      <tr>
+                        <td>
+                          <img height='40' src='' id='imgWeather' />
+                        </td>
+                        <td style="padding-top:5px">
+                          <span id='spanWeather'></span>
+                          <p id='pWeather'><?php echo LANG_home_LOADING;?></p>
+                        </td>
+                      </tr>
+                    </table>
+                  <?php else: ?>
+                      Please select your location in settings.
+                  <?php endif ?>
+                  <table width=100%" border="0" style="margin-top:8px;">
+                    <?php
+                    $qryRain = $db->select_nextrainforecasts();
+                    $i=0;
+                    while ($row = $qryRain->fetch(PDO::FETCH_BOTH)) {
+                      if($i==0){
+                        echo("<tr><th style='text-align:center' colspan='2'>".LANG_home_NEXTRAIN."</th></tr>");
+                        echo("<tr><th>".LANG_home_TIME."</th><th>mm</th></tr>");
+                      }
+                      if($i<3){
+                        echo("<tr>");
+                        echo("<td>".$row['Time']."</td>");
+                        echo("<td>".$row['Liters']."</td>");
+                        echo("</tr>");
+                      }
+                      $i++;
+
+                    }
+
+                    ?>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

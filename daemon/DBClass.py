@@ -139,7 +139,7 @@ class DBClass:
 		conn = sqlite3.connect(self.DB_PATH)
 		cursor = conn.cursor()
 
-		cursor.execute("SELECT SUM(Liters) FROM tbRainForecasts WHERE Day(Time) = CURDATE();")
+		cursor.execute("SELECT SUM(Liters) FROM tbRainForecasts WHERE Day(Time) = strftime('%Y-%m-%d','now','localtime');")
 		results = cursor.fetchall()
 		
 		conn.commit()
@@ -203,7 +203,7 @@ class DBClass:
 		conn.close()
 
 	def query_delete_old_forecasts(self):
-		sql = "DELETE FROM tbRainForecasts WHERE DATE(Time) < CURDATE();"
+		sql = "DELETE FROM tbRainForecasts WHERE DATE(Time) < strftime('%Y-%m-%d','now','localtime');"
 		
 		conn = sqlite3.connect(self.DB_PATH)
 		cursor = conn.cursor()

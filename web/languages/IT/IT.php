@@ -16,6 +16,8 @@ define('LANG_home_DATETIME','Data/Ora di sistema');
 define('LANG_home_DAEMON', 'Stato del demone');
 define('LANG_home_DAEMON_OK', 'In esecuzione');
 define('LANG_home_DAEMON_KO', 'Fermo');
+define('LANG_home_NEXTRAIN', 'Prossima pioggia prevista');
+define('LANG_home_TIME','Ore');
 
 define('LANG_settings_LANGUAGE', 'Lingua');
 define('LANG_settings_LOCATION', 'Località');

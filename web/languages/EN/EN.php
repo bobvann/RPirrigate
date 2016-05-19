@@ -16,6 +16,8 @@ define('LANG_home_DATETIME','System date/time');
 define('LANG_home_DAEMON', 'Daemon status');
 define('LANG_home_DAEMON_OK', 'Running');
 define('LANG_home_DAEMON_KO', 'Stopped');
+define('LANG_home_NEXTRAIN', 'Next Rain Forecasts');
+define('LANG_home_TIME','Time');
 
 define('LANG_settings_LANGUAGE', 'Language');
 define('LANG_settings_LOCATION', 'Location');
