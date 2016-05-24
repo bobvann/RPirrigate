@@ -69,8 +69,9 @@ if(isset($_POST['WeatherEnabled'])){
     <link rel="stylesheet" href="misc/bootstrap.css" media="screen">
     <link rel="stylesheet" href="misc/bootswatch.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <script src="//crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script>
-    <script src="//crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha1.js"></script>
+    <script src="misc/crypto-js/core-min.js"></script>
+    <script src="misc/crypto-js/md5-min.js"></script>
+    <script src="misc/crypto-js/sha1-min.js"></script>
     <script type="text/javascript">
       function HideShow(what){
         if($('#div'+what+'1').css("display")!="none"){
