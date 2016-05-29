@@ -139,7 +139,7 @@ class DBClass:
 		conn = sqlite3.connect(self.DB_PATH)
 		cursor = conn.cursor()
 
-		cursor.execute("SELECT SUM(Liters) FROM tbRainForecasts WHERE Day(Time) = strftime('%Y-%m-%d','now','localtime');")
+		cursor.execute("SELECT SUM(Liters) FROM tbRainForecasts WHERE strftime('%Y-%m-%d',Time) = strftime('%Y-%m-%d','now','localtime');")
 		results = cursor.fetchall()
 		
 		conn.commit()
