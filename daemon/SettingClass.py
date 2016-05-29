@@ -21,4 +21,4 @@ class SettingClass:
 
 	def reload(self, DataBase):	
 		self.location = DataBase.select1_setting("Location")
-		self.weatherEnabled = DataBase.select1_setting("Location")=="1"
+		self.weatherEnabled = DataBase.select1_setting("WeatherEnabled")=="1"
