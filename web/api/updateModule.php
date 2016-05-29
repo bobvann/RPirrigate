@@ -23,7 +23,6 @@ $db = new DB_CONN();
   PRIMARY KEY ("ModuleID")
 );
  */
-$db = new DB_CONN();
 
 $updateData = [];
 

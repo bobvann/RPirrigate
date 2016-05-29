@@ -47,6 +47,11 @@ function apiBaseChecks(){
         http_response_code(405);die(); //not allowed
     }
 
+	if($_SERVER['REMOTE_ADDR']=="127.0.0.1"){
+		//always allow from localhost
+		return;
+	}
+
     if(!isset($_POST['username'])){
         http_response_code(400);die();
     }
