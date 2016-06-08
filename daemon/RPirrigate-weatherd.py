@@ -30,7 +30,7 @@ MIN_MM = 1
 
 city = DB.select1_setting("Location")
 
-now = datetime.datetime.utcnow()
+now = datetime.datetime.now()
 yesterday = now - datetime.timedelta(days=1)
 
 now_date = time.strftime("%Y-%m-%d", now.timetuple())
