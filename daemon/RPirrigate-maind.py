@@ -28,7 +28,7 @@ def handHUP(signum, frame):
 
 #LOG ON LOGFILE status
 def logStatus(text):
-	with open("/var/log/rpirrigate/status.log","a") as f: 
+	with open("/var/log/rpirrigate/status.log","a+") as f: 
 		f.write(str(datetime.now())+" "+text+"\n")
 
 #LOG ON LOGFILE error
@@ -41,7 +41,7 @@ def logError():
 	line = linecache.getline(filename, lineno, f.f_globals)
 
 	text = "EXCEPTION IN (" + str(filename) + ", LINE " + str(lineno) + " '" + str(line.strip()) + "'):" + str(exc_obj);
-	with open("/var/log/rpirrigate/error.log","a") as f: 
+	with open("/var/log/rpirrigate/error.log","a+") as f: 
 		f.write(str(datetime.now())+" "+text+"\n")
 
 #SIGNAL HANDLING DEFINITON
