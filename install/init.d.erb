@@ -18,6 +18,10 @@ PIDFILE1=/var/run/rpirrigate-maind.pid
 PIDFILE2=/var/run/rpirrigate-gpiod.pid
 
 start() {
+  mkdir -p /var/log/rpirrigate
+  chown -R $RUNAS1:$RUNAS1 /var/log/rpirrigate
+  chmod -R 775 /var/log/rpirrigate
+  
   if [ -f /var/run/$PIDNAME1 ] && kill -0 $(cat /var/run/$PIDNAME1); then
     echo 'Service 1 already running' >&2
     return 1
