@@ -685,13 +685,15 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
                       while($row = $lasts->fetch(PDO::FETCH_ASSOC)){
                         echo("<tr><td>".substr($row['Time'],0, 16)."</td>");
 
+
                         if($row['isRain']){
                           echo ("<td>" . LANG_module_RAIN . "</td>");
                           echo("<td>".$row['Liters']." mm </td>");
                         }else{
-                          echo("<td>".(($row['EventID']=='-1') ? LANG_module_MANUALIRRIGATION : LANG_module_PLANNEDIRRIGATION)) ."</td>") ;
-                          echo("<td>".fewMinutesToShortString( $row['Liters'] ."</td>");
+                          echo("<td>".($row['EventID']=='-1' ? LANG_module_MANUALIRRIGATION : LANG_module_PLANNEDIRRIGATION) ."</td>") ;
+                          echo("<td>".fewMinutesToShortString( $row['Liters']) ."</td>");
                         }
+                        
 
                         echo("</tr>");
                       }
