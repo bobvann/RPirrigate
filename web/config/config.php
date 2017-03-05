@@ -355,8 +355,8 @@ class DB_CONN {
 	}
 
 	public function query_module_add($name, $description, $gpio, $image){
-		$sql = "INSERT INTO tbModules (Name, Description, GPIO) ";
-		$sql.= "VALUES (:name, :description, :gpio)";
+		$sql = "INSERT INTO tbModules (Throughtput, Name, Description, GPIO) ";
+		$sql.= "VALUES (0, :name, :description, :gpio)";
 		$params = array(':name'=>$name,
 						':description'=>$description,
 						':gpio'=>$gpio);
