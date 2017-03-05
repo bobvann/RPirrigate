@@ -89,6 +89,54 @@ function minutesToString($minutes){
 	return substr($str, 0, strlen($str)-2);
 }
 
+function fewMinutesToShortString($minutes){
+	$m = floatval($minutes);
+
+	$hours = intval($m/60);
+
+	if($hours>0){
+		$m = $m - (60*$hours);
+	}
+
+	$mins = floor($m);
+	$fract = $m - $mins;
+
+	$r='';
+
+
+	if($hours>0){
+		if($r==''){
+			$r = $hours + ' ' + LANG_timestring_HOURS_SHORT;
+		}else{
+			$r .= ', ' + $hours + ' ' + LANG_timestring_HOURS_SHORT;
+		}
+	}
+
+	if($mins>0){
+		if($r==''){
+			$r = $mins + ' ' + LANG_timestring_MINUTES_SHORT;
+		}else{
+			$r .= ', ' + $mins + ' ' + LANG_timestring_MINUTES_SHORT;
+		}
+	}
+
+	if($fract > 0){
+		$secs = intval($fract*60);
+
+		if($r==''){
+			$r = $secs + ' ' + LANG_timestring_SECONDS_SHORT;
+		}else{
+			$r .= ', ' + $secs + ' ' + LANG_timestring_SECONDS_SHORT;
+		}
+
+		
+	}
+
+	return $r;
+
+}
+
+
 class DB_CONN {
 	private $db_conn;
 

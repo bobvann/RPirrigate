@@ -403,15 +403,32 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
                   $last = $db->select_module_lastLog($currModuleID)->fetch(PDO::FETCH_ASSOC);
                   $NoLogsYet = empty($last);
                   if(!$NoLogsYet){
+
                     if($last['isRain']){
                       echo("<img src='misc/img_rain.png' /><br/><br/>");
-                    } else {
+                      echo $last['Time'] . "<br/><b>" . LANG_module_RAIN;
+                      echo "-";
+
+                    }else{
                       echo("<img src='misc/img_irrigate.png' /><br/><br/>");
+                      echo $last['Time'] . "<br/><b>";
+                      if($last['EventID']==-1){
+                        echo LANG_module_MANUALIRRIGATION;
+                      }else{
+                        echo LANG_module_PLANNEDIRRIGATION;
+                      }
+                      echo "-";
                     }
-                    echo $last['Time'] . "<br/><b>" . ($last['isRain']? LANG_module_RAIN : (($last['EventID']=='-1')?LANG_module_MANUALIRRIGATION : LANG_module_PLANNEDIRRIGATION)) . " - ";
-                    echo ($last['Liters']>-1)
-                          ? $last['Liters'] ." ".  ($last['isRain']? "mm" : LANG_module_MINUTES)."</b>"
-                          : LANG_module_INPROGRESS."</b>";
+
+                    
+                    if($last['Liters']>-1){
+                      echo fewMinutesToShortString( $last['Liters'] );
+
+                      echo " ".  ($last['isRain']? "mm" : LANG_module_MINUTES)."</b>";
+                    }else{
+                      echo LANG_module_INPROGRESS."</b>";
+                    }
+
                   } else {
                     echo("<img src='misc/img_noirrig.png' /><br/><br/>");
                     echo LANG_module_NOIRRIGYET;
@@ -540,7 +557,7 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
                       while($row = $lasts->fetch(PDO::FETCH_ASSOC)){
                         echo("<tr><td>".substr($row['Time'],0, 16)."</td>");
                         echo("<td>".($row['isRain']? LANG_module_RAIN : (($row['EventID']=='-1')?LANG_module_MANUALIRRIGATION : LANG_module_PLANNEDIRRIGATION)) ."</td>");
-                        echo("<td>".$row['Liters']." " . ($row['isRain']? "mm" : LANG_module_MINUTES_SHORT) ."</td></tr>");
+                        echo("<td>".fewMinutesToShortString( $row['Liters'] )." " . ($row['isRain']? "mm" : LANG_module_MINUTES_SHORT) ."</td></tr>");
                       }
                       ?>
                     </table>
@@ -657,7 +674,7 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
                       while($row = $lasts->fetch(PDO::FETCH_ASSOC)){
                         echo("<tr><td>".substr($row['Time'],0, 16)."</td>");
                         echo("<td>".($row['isRain']? LANG_module_RAIN : (($row['EventID']=='-1')?LANG_module_MANUALIRRIGATION : LANG_module_PLANNEDIRRIGATION)) ."</td>");
-                        echo("<td>".$row['Liters']." " . ($row['isRain']? "mm" : LANG_module_MINUTES_SHORT) ."</td></tr>");
+                        echo("<td>". fewMinutesToShortString( $row['Liters'] )." " . ($row['isRain']? "mm" : LANG_module_MINUTES_SHORT) ."</td></tr>");
                       }
                       ?>
                     </table>
