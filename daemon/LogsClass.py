@@ -36,5 +36,5 @@ class LogsClass:
 		now = datetime.now()
 		start = M.openTime
 		diff = now - start
-		liters = float(M.throughtput)*diff.total_seconds()/60/60
+		liters = diff.total_seconds()/60
 		next((x for x in self.elements if x.id == M.openDbRowID), None).liters = liters
