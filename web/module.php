@@ -685,8 +685,16 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
                       $lasts = $db->select_module_logs($currModuleID);
                       while($row = $lasts->fetch(PDO::FETCH_ASSOC)){
                         echo("<tr><td>".substr($row['Time'],0, 16)."</td>");
-                        echo("<td>".($row['isRain']? LANG_module_RAIN : (($row['EventID']=='-1')?LANG_module_MANUALIRRIGATION : LANG_module_PLANNEDIRRIGATION)) ."</td>");
-                        echo("<td>". fewMinutesToShortString( $row['Liters'] )." " . ($row['isRain']? "mm" : LANG_module_MINUTES_SHORT) ."</td></tr>");
+
+                        if($row['isRain']){
+                          echo LANG_module_RAIN ;
+                          echo("<td>".fewMinutesToShortString( $row['Liters'] )." " ."</td>");
+                        }else{
+                          echo("<td>".(($row['EventID']=='-1') ? LANG_module_MANUALIRRIGATION : LANG_module_PLANNEDIRRIGATION)) ."</td>" ;
+                          echo("<td>".$row['Liters']." mm </td>");
+                        }
+
+                        echo("</tr>");
                       }
                       ?>
                     </table>
