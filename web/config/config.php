@@ -106,17 +106,17 @@ function fewMinutesToShortString($minutes){
 
 	if($hours>0){
 		if($r==''){
-			$r = $hours + ' ' + LANG_timestring_HOURS_SHORT;
+			$r = $hours . ' ' . LANG_timestring_HOURS_SHORT;
 		}else{
-			$r .= ', ' + $hours + ' ' + LANG_timestring_HOURS_SHORT;
+			$r .= ', ' . $hours . ' ' . LANG_timestring_HOURS_SHORT;
 		}
 	}
 
 	if($mins>0){
 		if($r==''){
-			$r = $mins + ' ' + LANG_timestring_MINUTES_SHORT;
+			$r = $mins . ' ' . LANG_timestring_MINUTES_SHORT;
 		}else{
-			$r .= ', ' + $mins + ' ' + LANG_timestring_MINUTES_SHORT;
+			$r .= ', ' . $mins + ' ' . LANG_timestring_MINUTES_SHORT;
 		}
 	}
 
@@ -124,9 +124,9 @@ function fewMinutesToShortString($minutes){
 		$secs = intval($fract*60);
 
 		if($r==''){
-			$r = $secs + ' ' + LANG_timestring_SECONDS_SHORT;
+			$r = $secs . ' ' . LANG_timestring_SECONDS_SHORT;
 		}else{
-			$r .= ', ' + $secs + ' ' + LANG_timestring_SECONDS_SHORT;
+			$r .= ', ' . $secs . ' ' . LANG_timestring_SECONDS_SHORT;
 		}
 
 		
