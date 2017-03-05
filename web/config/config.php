@@ -267,16 +267,14 @@ class DB_CONN {
 		return $this->ex_query($sql, array(':act'=>$act, ':val'=>$val, ':id'=>$id));
 	}
 
-	public function query_module_settings_update($id, $name, $gpio, $thr){
+	public function query_module_settings_update($id, $name, $gpio){
 		$sql = "UPDATE tbModules ";
 		$sql.= "SET Name = :name, ";
 		$sql.= "GPIO = :gpio, ";
-		$sql.= "Throughtput = :thr ";
 		$sql.= "WHERE ModuleID = :id";
 		$params = array(':id'=>$id,
 						':name'=>$name,
-						':gpio'=>$gpio,
-						':thr'=>$thr
+						':gpio'=>$gpio
 						);
 		return $this->ex_query($sql, $params);
 
@@ -298,10 +296,6 @@ class DB_CONN {
 			if(isset($updateData['GPIO'])){
 				$sql .= "GPIO = :GPIO, ";
 				$params[':GPIO'] = $updateData['GPIO'];
-			}
-			if(isset($updateData['Throughtput'])){
-				$sql .= "Throughtput = :Throughtput, ";
-				$params[':Throughtput'] = $updateData['Throughtput'];
 			}
 			if(isset($updateData['ManualACT'])){
 				$sql .= "ManualACT = :ManualACT, ";
@@ -360,13 +354,12 @@ class DB_CONN {
 		return $this->ex_query($sql, array(':id'=>$module));
 	}
 
-	public function query_module_add($name, $description, $gpio, $throughtput, $image){
-		$sql = "INSERT INTO tbModules (Name, Description, GPIO, Throughtput) ";
-		$sql.= "VALUES (:name, :description, :gpio, :throughtput)";
+	public function query_module_add($name, $description, $gpio, $image){
+		$sql = "INSERT INTO tbModules (Name, Description, GPIO) ";
+		$sql.= "VALUES (:name, :description, :gpio)";
 		$params = array(':name'=>$name,
 						':description'=>$description,
-						':gpio'=>$gpio,
-						':throughtput'=>$throughtput);
+						':gpio'=>$gpio);
 		$this->ex_query($sql, $params);
 
 		$check = getimagesize($image["tmp_name"]);

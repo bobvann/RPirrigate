@@ -10,8 +10,8 @@ $lang = $db->select1_setting('Language');
 include 'languages/'.$lang.'/'.$lang.'.php';
 
 $bannerMessage="";
-if(isset($_POST['name'])&&isset($_POST['description'])&&isset($_POST['gpio'])&&isset($_POST['throughtput']) ){
-  $db->query_module_add($_POST['name'],$_POST['description'],$_POST['gpio'],$_POST['throughtput'],$_FILES['image']);
+if(isset($_POST['name'])&&isset($_POST['description'])&&isset($_POST['gpio']) ){
+  $db->query_module_add($_POST['name'],$_POST['description'],$_POST['gpio'], $_FILES['image']);
   $bannerMessage = LANG_modulenew_BANNER;
   //*** ALSO SEND SIGUSR1 TO THE DAEMON TO MAKE IT RELOAD SETTINGS!!
   $pid = $db->select1_daemon_pid();
@@ -60,15 +60,9 @@ if(isset($_POST['name'])&&isset($_POST['description'])&&isset($_POST['gpio'])&&i
     }
     function Step2_end(){
       var gpio = $('#txtGPIO').val();
-      var thro = $('#txtThroughtput').val();
 
       if(gpio.length==0 ){
         alert("<?php echo LANG_modulenew_ERR3; ?>");
-        return;
-      }
-
-      if(thro.length==0){
-        alert("<?php echo LANG_modulenew_ERR4; ?>");
         return;
       }
 
@@ -178,12 +172,6 @@ if(isset($_POST['name'])&&isset($_POST['description'])&&isset($_POST['gpio'])&&i
 
                             ?>
                           </select>
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <p style="font-weight:bold;text-align:center;"><?php echo LANG_module_THROUGHTPUT ?></p>
-                        <div class="col-lg-10" style="width:30%;float:none;margin:auto" >
-                          <input id="txtThroughtput" name="throughtput" type="text" class="form-control">
                         </div>
                       </div>
                       <div class="form-group">

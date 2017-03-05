@@ -43,8 +43,8 @@ if(isset($_POST['ManualSave']) && $_POST['ManualSave']=='true'){
   sleep(1); //let daemon reload and log
 }
 
-if (isset($_POST['Settings_Throughtput']) && isset($_POST['Settings_Name']) && isset($_POST['Settings_GPIO'])){
-  $db->query_module_settings_update($currModuleID, $_POST['Settings_Name'], $_POST['Settings_GPIO'], $_POST['Settings_Throughtput']);
+if (isset($_POST['Settings_Name']) && isset($_POST['Settings_GPIO'])){
+  $db->query_module_settings_update($currModuleID, $_POST['Settings_Name'], $_POST['Settings_GPIO']);
   $bannerMessage = LANG_module_BANNER_SETTINGS;
   $pid = $db->select1_daemon_pid();
   //Newer php version use SIG_NAME, newer SIGNAME
@@ -410,7 +410,7 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
                     }
                     echo $last['Time'] . "<br/><b>" . ($last['isRain']? LANG_module_RAIN : (($last['EventID']=='-1')?LANG_module_MANUALIRRIGATION : LANG_module_PLANNEDIRRIGATION)) . " - ";
                     echo ($last['Liters']>-1)
-                          ? $last['Liters'] ." ".  ($last['isRain']? "mm" : LANG_module_LITERS)."</b>"
+                          ? $last['Liters'] ." ".  ($last['isRain']? "mm" : LANG_module_MINUTES)."</b>"
                           : LANG_module_INPROGRESS."</b>";
                   } else {
                     echo("<img src='misc/img_noirrig.png' /><br/><br/>");
@@ -432,7 +432,7 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
                 <div class="panel-body" id="divEvents1">
                   <table style="width:100%;margin-top:-5px;text-align:center;font-size:90%">
                     <tr>
-                      <td><b><?php echo LANG_module_LITERS ?></b></td>
+                      <td><b><?php echo LANG_module_MINUTES ?></b></td>
                       <td><b><?php echo LANG_module_INTERVAL ?></b></td>
                       <td><b><?php echo LANG_module_IRRIG_NEXT ?></b></td>
                       <td></td>
@@ -540,7 +540,7 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
                       while($row = $lasts->fetch(PDO::FETCH_ASSOC)){
                         echo("<tr><td>".substr($row['Time'],0, 16)."</td>");
                         echo("<td>".($row['isRain']? LANG_module_RAIN : (($row['EventID']=='-1')?LANG_module_MANUALIRRIGATION : LANG_module_PLANNEDIRRIGATION)) ."</td>");
-                        echo("<td>".$row['Liters']." " . ($row['isRain']? "mm" : LANG_module_LITERS_SHORT) ."</td></tr>");
+                        echo("<td>".$row['Liters']." " . ($row['isRain']? "mm" : LANG_module_MINUTES_SHORT) ."</td></tr>");
                       }
                       ?>
                     </table>
@@ -569,10 +569,6 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
                     <tr style="height:25px">
                       <td><b>GPIO PIN</b></td>
                       <td><?php echo $currModule['GPIO']?></td>
-                    </tr>
-                    <tr style="height:25px">
-                      <td><b><?php echo LANG_module_THROUGHTPUT ?></b></td>
-                      <td><?php echo $currModule['Throughtput']?></td>
                     </tr>
                   </table>
                   <a href="javascript:HideShow('Settings');" 
@@ -617,10 +613,6 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
                           ?>
                           <option selected value="<?php echo $currModule['GPIO']?>"><?php echo $currModule['GPIO']?></option>
                         </select>
-                    </tr>
-                    <tr style="height:25px">
-                      <td style="padding-right:10px;width:70%"><b><?php echo LANG_module_THROUGHTPUT ?></b></td>
-                      <td><input required type="text" class="form-control input-sm" name="Settings_Throughtput" value="<?php echo $currModule['Throughtput']?>" /></td>
                     </tr>
                   </table>
                   <a href="javascript:HideShow('Settings');" 

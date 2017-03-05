@@ -32,7 +32,6 @@ $response['manualValue'] = $currModule['ManualVAL']?true:false;
 $response['name'] = $currModule['Name'];
 $response['description'] = $currModule['Description'];
 $response['gpio'] = $currModule['GPIO'];
-$response['throughtput'] = $currModule['Throughtput'];
 
 $response['lastIrrigation'] = [];
 $response['lastIrrigation']['isRain'] = $last['isRain'];

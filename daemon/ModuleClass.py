@@ -5,7 +5,6 @@ from datetime import datetime, timedelta
 ##  Properties
 ##     - id
 ##     - gpio
-##     - throughtput
 ##     - manualACT
 ##     - manualVAL
 ##     - Events = Event object
@@ -31,14 +30,13 @@ class ModuleClass:
 	def reloadSettings(self, DataBase):
 		info = DataBase.select_module_data(self.id)
 		self.gpio = info[0]
-		self.throughtput = info[1]
 
 		self.Events = []
 		ev_ids = DataBase.select_event_ids(self.id)
 		for ev_id in ev_ids:
 			self.Events.append(EventClass(DataBase, ev_id))
 		for ev in self.Events:
-			ev.duration = int( float(ev.liters)/float(self.throughtput) * 60 )
+			ev.duration = int( ev.liters )
 			#ev.duration = int(ev.liters) #Daemon runs on more than 1 min, so no sense of decimal minutes
 
 		#DEBUG

@@ -51,19 +51,19 @@ class DBClass:
 			ids.append(row[0])
 		return ids
 
-	#returns array [0->Name, 1->Description, 2->GPIO, 3->Throughtput]
+	#returns array [0->Name, 1->Description, 2->GPIO ]
 	def select_module_data(self, ModuleID):
 		
 		conn = sqlite3.connect(self.DB_PATH)
 		cursor = conn.cursor()
 
-		cursor.execute("SELECT GPIO, Throughtput FROM tbModules WHERE ModuleID = " + str(ModuleID))
+		cursor.execute("SELECT GPIO FROM tbModules WHERE ModuleID = " + str(ModuleID))
 		results = cursor.fetchall()
 		
 		conn.commit()
 		conn.close()
 
-		return [results[0][0], results[0][1] ]
+		return [results[0][0] ]
 
 	#returns array [0->ManualACT, 1->ManualVAL]
 	def select_module_manual(self, ModuleID):
@@ -163,7 +163,7 @@ class DBClass:
 		now = datetime.now()
 		start = M.openTime
 		diff = now - start
-		liters = round( float(M.throughtput)*diff.total_seconds()/60/60 , 2)
+		liters = round( diff.total_seconds()/60 , 2)
 
 		
 		conn = sqlite3.connect(self.DB_PATH)

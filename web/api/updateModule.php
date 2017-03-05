@@ -17,7 +17,6 @@ $db = new DB_CONN();
   "Name" varchar(50) NOT NULL,
   "Description" text NOT NULL,
   "GPIO" int(11) NOT NULL,
-  "Throughtput" decimal(10,2) NOT NULL,
   "ManualACT" tinyint(1) DEFAULT '0',
   "ManualVAL" tinyint(1) DEFAULT '0',
   PRIMARY KEY ("ModuleID")
@@ -65,16 +64,6 @@ if(isset($_POST['U_GPIO'])){
 
     if(!in_array($updateData['GPIO'],$allowed)){
         http_response_code(400);die(); //BAD REQUEST, GPIO INVALID
-    }
-
-    $reloadDaemon = true;
-}
-if(isset($_POST['U_Throughtput'])){
-    $updateData['Throughtput'] = floatval($_POST['U_Throughtput']);
-
-    // validating
-    if($updateData['Throughtput']<=0){
-        http_response_code(400);die(); //BAD REQUEST, THROUGHTPUT INVALID
     }
 
     $reloadDaemon = true;

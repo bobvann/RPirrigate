@@ -90,10 +90,12 @@ define('LANG_module_BANNER_NEWEVENT', 'Nuova irrigazione aggiunta al piano con s
 define('LANG_module_BANNER_DELETEEVENT', 'Irrigazione eliminata con successo');
 define('LANG_module_THROUGHTPUT', 'Portata (l/h)');
 define('LANG_module_LITERS','Litri');
+define('LANG_module_MINUTES','Minuti');
+define('LANG_module_MINUTES_SHORT','Min');
 define('LANG_module_LITERS_SHORT','Lt.');
 define('LANG_module_INTERVAL','Intervallo');
 define('LANG_module_ADDEVENT','Nuova Irrigazione');
-define('LANG_module_QUANTITYTOGIVE',"Litri d'acqua ad ogni irrigazione");
+define('LANG_module_QUANTITYTOGIVE',"Durata (minuti) di  ogni irrigazione");
 define('LANG_module_STARTINGFROM','A partire da');
 define('LANG_module_IRRIGATEEVERY','Irriga ogni');
 define('LANG_module_INPROGRESS', "In corso");
