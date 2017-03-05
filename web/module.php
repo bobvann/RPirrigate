@@ -565,7 +565,7 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
                           echo ("<td>" . LANG_module_RAIN . "</td>");
                           echo("<td>".$row['Liters']." mm </td>");
                         }else{
-                          echo("<td>".(($row['EventID']=='-1') ? LANG_module_MANUALIRRIGATION : LANG_module_PLANNEDIRRIGATION)) ."</td>") ;
+                          echo("<td>".( ($row['EventID']=='-1') ? LANG_module_MANUALIRRIGATION : LANG_module_PLANNEDIRRIGATION) ."</td>") ;
                           echo("<td>".fewMinutesToShortString( $row['Liters'] ."</td>");
                         }
                         
