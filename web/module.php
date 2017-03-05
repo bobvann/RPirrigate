@@ -407,7 +407,7 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
                     if($last['isRain']){
                       echo("<img src='misc/img_rain.png' /><br/><br/>");
                       echo $last['Time'] . "<br/><b>" . LANG_module_RAIN;
-                      echo "-";
+                      echo " - ";
 
                     }else{
                       echo("<img src='misc/img_irrigate.png' /><br/><br/>");
@@ -417,14 +417,18 @@ $currModule = $db->select_modules($currModuleID)->fetch(PDO::FETCH_ASSOC);
                       }else{
                         echo LANG_module_PLANNEDIRRIGATION;
                       }
-                      echo "-";
+                      echo " - ";
                     }
 
                     
                     if($last['Liters']>-1){
-                      echo fewMinutesToShortString( $last['Liters'] );
 
-                      echo " ".  ($last['isRain']? "mm" : LANG_module_MINUTES)."</b>";
+                      if($last['isRain']){
+                        echo $last['Liters'] . ' ' . 'mm';
+                      }else{
+                        echo fewMinutesToShortString( $last['Liters'] );
+                      }
+                      
                     }else{
                       echo LANG_module_INPROGRESS."</b>";
                     }
