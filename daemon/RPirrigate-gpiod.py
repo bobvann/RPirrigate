@@ -8,8 +8,6 @@ from GPIOClass import GPIOClass
 
 socketpath = "/run/rpirrigate-gpiod-socket"
 
-os.chmod(socketpath,stat.S_IRWXO)
-
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
@@ -37,6 +35,7 @@ if os.path.exists(socketpath):
 server = socket.socket( socket.AF_UNIX, socket.SOCK_STREAM )
 server.bind(socketpath)
 
+os.chmod(socketpath,stat.S_IRWXO)
 
 server.listen(5)
 
