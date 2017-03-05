@@ -52,8 +52,6 @@ while True:
 		
 		d=datagram.split("#")
 
-		print d
-
 		if(len(d)<2):
 			break
 
